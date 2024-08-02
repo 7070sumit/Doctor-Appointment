@@ -13,6 +13,12 @@ import {
   //Doctor Imports
   Doctor_Signin,
   Doctor_Signup,
+  Doctor_Home,
+  Doctor_Availability,
+  Doctor_Mark_Leave,
+  Doctor_Setting,
+  Doctor_Update_Profile,
+  Doctor_Appointments,
 
 } from './Components'
 
@@ -20,6 +26,15 @@ import {
 const router = createBrowserRouter(
   createRoutesFromElements(
 
+    <Route>
+    <Route path='/doctor'>
+    <Route path='' element={<Doctor_Home/>} />
+    <Route path='availability' element={<Doctor_Availability/>} />
+    <Route path='mark-leave' element={<Doctor_Mark_Leave/>} />
+    <Route path='appointments' element={<Doctor_Appointments/>} />
+    <Route path='setting' element={<Doctor_Setting/>} />
+    <Route path='update-profile' element={<Doctor_Update_Profile/>} />
+    </Route>
     <Route path='/' element={<Layout />}>
       <Route path='user'>
         <Route path='login' element={<User_Signin/>} />
@@ -29,7 +44,7 @@ const router = createBrowserRouter(
         <Route path='login' element={<Doctor_Signin/>} />
         <Route path='register' element={<Doctor_Signup/>} />
       </Route>
-
+      </Route>
     </Route>
 
   )
