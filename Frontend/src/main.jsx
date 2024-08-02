@@ -4,15 +4,31 @@ import App from './App.jsx'
 import './index.css'
 import { Route, RouterProvider, createBrowserRouter, createRoutesFromElements } from 'react-router-dom'
 import Layout from './Layout.jsx'
-import { User, Doctor } from './Components'
+import {
+  //User Imports
+  User,
+  Signin,
+  User_Signup,
+
+  //Doctor Imports
+  Doctor_Signup,
+
+} from './Components'
 
 
 const router = createBrowserRouter(
   createRoutesFromElements(
+
     <Route path='/' element={<Layout />}>
-      <Route path='user' element={<User />} />
-      <Route path='doctor' element={<Doctor />} />
+      <Route path='user'>
+        <Route path='register' element={<User_Signup />} />
+      </Route>
+      <Route path='doctor'>
+        <Route path='register' element={<Doctor_Signup/>} />
+      </Route>
+
     </Route>
+
   )
 )
 
