@@ -4,11 +4,11 @@ import { NavLink, Link } from 'react-router-dom'
 function Doctor_Signup() {
     return (
         <div>
-            <header
+            {/* <header
                 className='w-full h-10  flex items-center justify-center gap-x-10 text-xl font-medium shadow-xl'
             >
                 <NavLink
-                    to='/user/register'
+                    to='/user/login'
                     className={({ isActive }) =>
                         `${isActive ? "text-[#F1B814]" : ""} hover:text-[#F1B814] duration-100`
                     }
@@ -21,11 +21,11 @@ function Doctor_Signup() {
                     className={({ isActive }) =>
                         `${isActive ? "text-[#F1B814]" : ""} hover:text-[#F1B814] duration-100`
                     }
-                    to='/doctor/register'
+                    to='/doctor/login'
                 >
                     Doctor
                 </NavLink>
-            </header>
+            </header> */}
             <div className='px-10 py-2 mt-5  w-full'>
                 <div className=' flex justify-center '>
 
@@ -36,9 +36,11 @@ function Doctor_Signup() {
                     >
                         <div className='flex flex-col items-center justify-center'>
                             <p className='text-[#490B3D] text-lg font-medium text-center'>Register and start accepting online appointments from patients, offering consultations via video calls or in-clinic visits. Streamline your practice and enhance patient care with our seamless platform.</p>
-                            <button className='px-5 py-1 mt-5 text-lg font-medium rounded-lg border border-white bg-transparent text-white hover:border-[#490B3D] hover:text-[#490B3D] duration-300'>
+                            <Link
+                            to='/doctor/login'
+                            className='px-5 py-1 mt-5 text-lg font-medium rounded-lg border border-white bg-transparent text-white hover:border-[#490B3D] hover:text-[#490B3D] duration-300'>
                                 Signin
-                            </button>
+                            </Link>
                         </div>
 
                     </div>
@@ -113,7 +115,7 @@ function Doctor_Signup() {
                                         Already Registered? &nbsp;
                                         <Link
                                             className='font-medium'
-                                            to='#'
+                                            to='/doctor/login'
                                         >
                                             Sign In
                                         </Link>

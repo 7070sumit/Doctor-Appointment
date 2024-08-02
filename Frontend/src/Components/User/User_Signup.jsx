@@ -4,11 +4,11 @@ import { Link, NavLink } from 'react-router-dom'
 function User_Signup() {
     return (
         <div>
-            <header
+            {/* <header
                 className='w-full h-10  flex items-center justify-center gap-x-10 text-xl font-medium shadow-xl'
             >
                 <NavLink
-                    to='/user/register'
+                    to='/user/login'
                     className={({ isActive }) =>
                         `${isActive ? "text-[#F1B814]" : ""} hover:text-[#F1B814] duration-100`
                     }
@@ -21,11 +21,11 @@ function User_Signup() {
                     className={({ isActive }) =>
                         `${isActive ? "text-[#F1B814]" : ""} hover:text-[#F1B814] duration-100`
                     }
-                    to='/doctor/register'
+                    to='/doctor/login'
                 >
                     Doctor
                 </NavLink>
-            </header>
+            </header> */}
             <div className='px-10 py-2 mt-5  w-full'>
                 <div className=' flex justify-center '>
                 <div className='p-2 px-20 w-full lg:w-1/2 flex flex-col gap-y-3 '>
@@ -95,7 +95,7 @@ function User_Signup() {
                                         Already Registered? &nbsp;
                                         <Link
                                             className='font-medium'
-                                            to='#'
+                                            to='/user/login'
                                         >
                                             Sign In
                                         </Link>

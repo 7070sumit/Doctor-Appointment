@@ -7,10 +7,11 @@ import Layout from './Layout.jsx'
 import {
   //User Imports
   User,
-  Signin,
+  User_Signin,
   User_Signup,
 
   //Doctor Imports
+  Doctor_Signin,
   Doctor_Signup,
 
 } from './Components'
@@ -21,9 +22,11 @@ const router = createBrowserRouter(
 
     <Route path='/' element={<Layout />}>
       <Route path='user'>
-        <Route path='register' element={<User_Signup />} />
+        <Route path='login' element={<User_Signin/>} />
+        <Route path='register' element={<User_Signup/>} />
       </Route>
       <Route path='doctor'>
+        <Route path='login' element={<Doctor_Signin/>} />
         <Route path='register' element={<Doctor_Signup/>} />
       </Route>
 
