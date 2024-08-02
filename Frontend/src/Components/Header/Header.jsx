@@ -4,6 +4,7 @@ import {Link,NavLink} from 'react-router-dom'
 
 function Header() {
   return (
+<<<<<<< HEAD
     <header className='shadow sticky z-50 top-0' >
       <nav className='bg-cyan-400 border-gray-200 px-4'>
         <div className='flex flex-wrap justify-center text-center items-center gap-1 mx-2'>
@@ -44,6 +45,11 @@ function Header() {
         </div>
       </nav>
     </header>
+=======
+    <div>
+      <h1>This is header created by sumit.</h1>
+    </div>
+>>>>>>> 415c043f7d390528fc999c9d73c6a44051ae78a9
   )
 }
 
