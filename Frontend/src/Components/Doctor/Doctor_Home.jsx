@@ -7,7 +7,7 @@ function Doctor_Home() {
   <div>
     <Doctor_Header />
   </div>
-  <div className="lg:pl-10 w-full flex flex-col">
+  <div className="lg:pl-5 w-full flex flex-col">
     <div className="h-24 border bg-gradient-to-r from-gray-300 to-yellow-700"></div>
     <div className="flex flex-col items-center lg:flex-row px-3 gap-x-2 lg:h-40">
       <div className="relative -top-8 lg:-top-8 md:-top-10 flex items-center justify-center">
