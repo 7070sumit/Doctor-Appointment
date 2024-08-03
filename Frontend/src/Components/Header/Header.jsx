@@ -51,8 +51,8 @@ function Header() {
                 </li>
               </ul>
             </div>
-            <div className='  basis-2/3  flex justify-end sm:justify-center mr-auto'>
-              <Link to="/user/login" className=' border-2 border-[#F1B814] bg-[#BD1E51]  rounded-md text-white font-semibold hover:bg-[#86176f]  p-1'>Log In / Sign Up </Link>
+            <div className=' basis-2/3  flex justify-end sm:justify-center mr-auto'>
+              <Link to="/user/login" className='hidden sm:block border-2 border-[#F1B814] bg-[#BD1E51]  rounded-md text-white font-semibold hover:bg-[#86176f]  p-1'>Log In / Sign Up </Link>
               <button className='sm:hidden ml-3 mr-6 flex flex-col justify-center' onClick={toggleMenu}>
                 {isMenuOpen ? (
                   <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000000"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" /></svg>
@@ -70,28 +70,33 @@ function Header() {
           </div>
         </nav>
       </header>
-      <div>
+      <div className=''>
         {isMenuOpen ? (
-          <ul className='bg-white pt-4 -mt-5 sm:hidden flex flex-col items-center justify-center text-base font-medium gap-2'>
+          <ul className='sm:hidden bg-white absolute w-full z-50 pt-4   flex flex-col items-center text-[#490B3D]  mr-5  opacity-80 text-base font-medium gap-2'>
 
-            <li>
+            <li className='border-slate-300 border-b-[1px] '>
               <NavLink to="/">
                 Home
               </NavLink>
             </li>
-            <li>
+            <li className='border-slate-300 border-b-[1px] '>
               <NavLink to="/labtest">
                 Lab Tests
               </NavLink>
             </li>
-            <li>
+            <li className='border-slate-300 border-b-[1px] '>
               <NavLink to="/buymedicine">
                 Buy Medicine
               </NavLink>
             </li>
-            <li>
+            <li className='border-slate-300 border-b-[1px] '>
               <NavLink to="/videoconsult">
                 Video Consult
+              </NavLink>
+            </li>
+            <li className='border-slate-300 border-b-[1px] '>
+              <NavLink to="/user/login" >
+              Log In / Sign Up 
               </NavLink>
             </li>
           </ul>)
