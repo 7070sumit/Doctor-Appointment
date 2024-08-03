@@ -17,7 +17,10 @@ app.use(cookieParser())
 import doctorRouter from './src/routes/doctor.route.js'
 import userRouter from './src/routes/user.routes.js'
 
-
+app.get('/', (req, res) => {
+    res.send('<h1>Hello from Express</h1>');
+  });
+  
 app.use('/api/v1/doctor',doctorRouter)
 app.use('/api/v1/user',userRouter)
 
