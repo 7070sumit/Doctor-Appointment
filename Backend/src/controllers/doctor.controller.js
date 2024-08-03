@@ -400,4 +400,4 @@ const getDoctorAppointments=asyncHandler(async(req,res)=>{
 
 
 
-export { registerDoctor, loginDoctor, logoutDoctor, updateProfile, updateProfilePicture, listDoctorOnWebsite, doctorAvailability, doctorMarkLeave,getDoctorAppointments }
+export { registerDoctor, loginDoctor, logoutDoctor, updateProfile, updateProfilePicture, listDoctorOnWebsite, doctorAvailability, doctorMarkLeave,getDoctorAppointments,helloHome }
