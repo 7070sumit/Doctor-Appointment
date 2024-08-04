@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 import Doctor_Header from './Doctor_Header'
 import cheerio from 'cheerio'
 import axios from 'axios'
+import { Link } from 'react-router-dom';
 
 
 
@@ -12,8 +13,44 @@ import axios from 'axios'
 function Doctor_Home() {
   const location=useLocation();
   const doctorInfo=location.state
+  const [profilePicture,setProfilePicture]=useState(null)
+  const[dp,setDp]=useState(doctorInfo.profilePicture)
   
- 
+  async function changeProfilePicture(){
+   if(!profilePicture){
+    alert("Please select a file.")
+    return 
+   }
+   const formData = new FormData();
+    formData.append('profilePicture', profilePicture);
+
+   try {
+    const accessToken = localStorage.getItem('accessToken');
+    const response = await axios.patch(
+      'https://doctor-appointment-ashy.vercel.app/api/v1/doctor/update-profile-picture', // Replace with your backend URL
+      formData,
+      {
+        withCredentials: true, // Ensures cookies are sent with the request
+        headers: {
+          'Content-Type': 'multipart/form-data', // Set content type
+          Authorization: `Bearer ${accessToken}`, // Include authorization header if needed
+        },
+      }
+    );
+
+      console.log(response);
+      doctorInfo.profilePicture=response.data.data.profilePicture
+      
+      
+   } catch (error) {
+    console.log("in Error");
+    console.log(error);
+    
+    
+    // setErrorMessage(error.response.data.message) 
+   }
+    
+  }
 
   // const fetchDoctorInfo =async ()=> {
   //   try {
@@ -68,6 +105,28 @@ function Doctor_Home() {
                 <path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z" />
               </svg>
             </button>
+
+
+
+
+            <div className='p-1 w-[100%] h-36 border absolute top-36 md:top-52  lg:top-52 lg:left-6 bg-white rounded-xl'>
+                <h1 className='text-lg font-medium text-[#490B3D]'>Change your Profile Picture</h1>
+                <input 
+
+                className='mt-5'
+                type="file" 
+                onChange={(e)=>(setProfilePicture(e.target.files[0]))}
+                />
+                <button 
+      
+                onClick={changeProfilePicture}
+                className='mt-6 ml-16 px-4 py-[2px] bg-[#BD1E51] text-white font-medium rounded-lg hover:bg-[#e0386e]'>Change</button>
+            </div>
+
+
+
+
+
           </div>
           <div className="px-5 py-5 w-full lg:w-3/4 flex items-start justify-between">
             <div className="text-[#490B3D] flex flex-col gap-y-1">
@@ -78,7 +137,10 @@ function Doctor_Home() {
               <p className="text-lg md:text-xl">{doctorInfo.specialization}</p>
             </div>
             <div>
-              <button className="flex border p-1 px-3 rounded-lg bg-gray-200 hover:bg-gray-100 duration-200">
+              <Link
+              to='/doctor/update-profile' 
+              state={doctorInfo}
+              className="flex border p-1 px-3 rounded-lg bg-gray-200 hover:bg-gray-100 duration-200">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   height="24px"
@@ -89,7 +151,7 @@ function Doctor_Home() {
                   <path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z" />
                 </svg>
                 <p>Edit Profile</p>
-              </button>
+              </Link>
             </div>
           </div>
         </div>
@@ -104,7 +166,7 @@ function Doctor_Home() {
             <li className="flex gap-x-5 text-lg font-medium w-full lg:w-[40%]">
               <p>Email:</p>
               <input
-                className="border rounded-lg border-gray-300 bg-white px-2 w-full lg:w-5/6"
+                className="border rounded-lg border-gray-300 bg-white px-2 w-full lg:w-5/6 hover:cursor-not-allowed"
                 disabled
                 value={doctorInfo.email}
                 type="text"
@@ -113,7 +175,7 @@ function Doctor_Home() {
             <li className="flex gap-x-5 text-lg font-medium w-full lg:w-1/4">
               <p>Phone:</p>
               <input
-                className="border rounded-lg border-gray-300 bg-white px-2 w-full lg:w-5/6"
+                className="border rounded-lg border-gray-300 bg-white px-2 w-full lg:w-5/6 hover:cursor-not-allowed"
                 disabled
                 value={doctorInfo.phone}
                 type="Number"

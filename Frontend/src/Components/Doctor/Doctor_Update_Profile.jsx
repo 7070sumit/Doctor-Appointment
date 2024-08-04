@@ -7,7 +7,7 @@ function Doctor_Update_Profile() {
 
   const location = useLocation();
   const doctorInfo = location.state
-  let message
+  let count=0
   const [lastName, setLastName] = useState(doctorInfo.lastName)
   const [specialization, setSpecialization] = useState(doctorInfo.specialization)
   const [experience, setExperience] = useState(doctorInfo.experience)
@@ -19,34 +19,22 @@ function Doctor_Update_Profile() {
   const [fullAddress, setFullAddress] = useState(doctorInfo.clinicAddress.fullAddress)
   const [clinicPhone, setClinicPhone] = useState(doctorInfo.clinicAddress.clinicPhone)
   const [pincode, setPincode] = useState(doctorInfo.clinicAddress.pincode)
-  const [change,setChange]=useState(false)
   const [errorMessage,setErrorMessage]=useState('')
+  const[message,setMessage]=useState('')
+  const[change,setChange]=useState(false)
   
 
-  useEffect(() => {
-    setChange(true)
-  }, [
-    lastName,
-    specialization,
-    experience,
-    degree,
-    appointmentFee,
-    street,
-    city,
-    state,
-    fullAddress,
-    clinicPhone,
-    pincode,
-  ]);
-
+ 
   async function updateProfile(){
+    
     console.log(change);
     
 
-    // if(!change){
-    //   setErrorMessage('No changes detected.')
-    //   return
-    // }
+    if(!change){
+      setErrorMessage('No changes detected.')
+      setMessage('')
+      return
+    }
     try {
       const accessToken = localStorage.getItem('accessToken');
       const response=await axios.patch('https://doctor-appointment-ashy.vercel.app/api/v1/doctor/update-profile',{specialization,experience,degree,street,city,fullAddress,state,pincode,clinicPhone,appointmentFee},
@@ -56,6 +44,9 @@ function Doctor_Update_Profile() {
               Authorization: `Bearer ${accessToken}`,
           },
       })
+      const str=response.data.message+" Changes will be reflected soon......"
+      setMessage(str)
+      setErrorMessage('')
       console.log("In Response");
       
       console.log(response);
@@ -97,7 +88,8 @@ function Doctor_Update_Profile() {
               className='mt-[1px] py-1 px-4 w-1/2 rounded-md text-[#F1B814] border text-lg font-medium outline-0 border-[#F1BB14] focus-within:border-[#F1BB14] focus-within:border-b-2'
               type="text"
               value={lastName}
-              onChange={(e) => (setLastName(e.target.value))}
+              onChange={(e) => (
+                setLastName(e.target.value),setChange(true))}
             />
           </div>
           <div className='flex flex-col items-start'>
@@ -123,7 +115,7 @@ function Doctor_Update_Profile() {
             <select
               name="Specialization"
               value={specialization}
-              onChange={(e) => { setSpecialization(e.target.value) }}
+              onChange={(e) => { setSpecialization(e.target.value),setChange(true) }}
               className='mt-[1px] py-1 px-4 w-1/2 rounded-md text-[#F1B814] border text-lg font-medium outline-0 border-[#F1BB14] focus-within:border-[#F1BB14] focus-within:border-b-2'
             >
               <option value="None">{doctorInfo.specialization}</option>
@@ -144,7 +136,7 @@ function Doctor_Update_Profile() {
             <label className='text-base font font-medium text-[#490B3D]'>Experience</label>
             <select
               value={experience}
-              onChange={(e) => { setExperience(e.target.value) }}
+              onChange={(e) => { setExperience(e.target.value),setChange(true) }}
               name="Experience"
               className='mt-[1px] py-1 px-4 w-1/2 rounded-md text-[#F1B814] border text-lg font-medium outline-0 border-[#F1BB14] focus-within:border-[#F1BB14] focus-within:border-b-2'
             >
@@ -159,7 +151,7 @@ function Doctor_Update_Profile() {
             <label className='text-base font font-medium text-[#490B3D]'>Degree</label>
             <select
               value={degree}
-              onChange={(e) => { setDegree(e.target.value) }}
+              onChange={(e) => { setDegree(e.target.value),setChange(true) }}
               name="Degree"
               className='mt-[1px] py-1 px-4 w-1/2 rounded-md text-[#F1B814] border text-lg font-medium outline-0 border-[#F1BB14] focus-within:border-[#F1BB14] focus-within:border-b-2'
             >
@@ -180,7 +172,7 @@ function Doctor_Update_Profile() {
               className='mt-[1px] py-1 px-4 w-1/2 rounded-md text-[#F1B814] border text-lg font-medium outline-0 border-[#F1BB14] focus-within:border-[#F1BB14] focus-within:border-b-2'
               type='Number'
               value={appointmentFee}
-              onChange={(e) => { setAppointmentFee(e.target.value) }}
+              onChange={(e) => { setAppointmentFee(e.target.value),setChange(true) }}
             />
           </div>
 
@@ -202,6 +194,7 @@ function Doctor_Update_Profile() {
             <input
               className='mt-[1px] py-1 px-4 w-1/2 rounded-md text-[#F1B814] border text-lg font-medium outline-0 border-[#F1BB14] focus-within:border-[#F1BB14] focus-within:border-b-2'
               type="text"
+              onChange={(e)=>(setStreet(e.target.value),setChange(true))}
               value={doctorInfo.clinicAddress.street}
             />
           </div>
@@ -212,7 +205,7 @@ function Doctor_Update_Profile() {
               className='mt-[1px] py-1 px-4 w-1/2 rounded-md text-[#F1B814] border text-lg font-medium outline-0 border-[#F1BB14] focus-within:border-[#F1BB14] focus-within:border-b-2'
               type="text"
               value={city}
-              onChange={(e) => (setCity(e.target.value))}
+              onChange={(e) => (setCity(e.target.value),setChange(true))}
             />
           </div>
 
@@ -222,7 +215,7 @@ function Doctor_Update_Profile() {
               className='mt-[1px] py-1 px-4 w-1/2 rounded-md text-[#F1B814] border text-lg font-medium outline-0 border-[#F1BB14] focus-within:border-[#F1BB14] focus-within:border-b-2'
               type="Number"
               value={clinicPhone}
-              onChange={(e) => { setClinicPhone(e.target.value) }}
+              onChange={(e) => { setClinicPhone(e.target.value),setChange(true) }}
             />
           </div>
           <div className='flex flex-col items-start'>
@@ -231,7 +224,7 @@ function Doctor_Update_Profile() {
               className='mt-[1px] py-1 px-4 w-1/2 rounded-md text-[#F1B814] border text-lg font-medium outline-0 border-[#F1BB14] focus-within:border-[#F1BB14] focus-within:border-b-2'
               type="Number"
               value={pincode}
-              onChange={(e) => { setPincode(e.target.value) }}
+              onChange={(e) => { setPincode(e.target.value),setChange(true) }}
             />
           </div>
           <div className='flex flex-col items-start col-span-2'>
@@ -240,14 +233,14 @@ function Doctor_Update_Profile() {
               className='mt-[1px] py-1 px-4 w-3/4 rounded-md text-[#F1B814] border text-lg font-medium outline-0 border-[#F1BB14] focus-within:border-[#F1BB14] focus-within:border-b-2'
               type="text"
               value={fullAddress}
-              onChange={(e) => (setFullAddress(e.target.value))}
+              onChange={(e) => (setFullAddress(e.target.value),setChange(true))}
             />
           </div>
           <div className='flex flex-col items-start'>
             <label className='text-base font font-medium text-[#490B3D]'>State</label>
             <select
               value={state}
-              onChange={(e) => { setState(e.target.value) }}
+              onChange={(e) => { setState(e.target.value),setChange(true) }}
               name="Degree"
               className='mt-[1px] py-1 px-4 w-1/2 rounded-md text-[#F1B814] border text-lg font-medium outline-0 border-[#F1BB14] focus-within:border-[#F1BB14] focus-within:border-b-2'
             >
@@ -293,6 +286,7 @@ function Doctor_Update_Profile() {
         </div>
 
         <h1 className='text-red-500'>{errorMessage}</h1>
+        <h1 className='text-green-600 text-lg font-medium' >{message}</h1>
 
         <div>
           <button

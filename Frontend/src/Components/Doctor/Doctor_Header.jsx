@@ -116,11 +116,11 @@ function Doctor_Header(props) {
                 <div className='flex items-center justify-center'>
                     <ul>
                         <li
-                            className='rounded-lg w-10 h-10 border border-[#BD1E51] overflow-hidden'
+                            className='rounded-lg w-10 h-10 border border-[#F1B814] overflow-hidden'
                             onMouseOver={() => setShowLogoutMenu(true)}
                             onMouseOut={() => setShowLogoutMenu(false)}
                         >
-                            <img src=''/>
+                            <img src={doctorInfo.profilePicture}/>
                         </li>
                     </ul>
                 </div>
