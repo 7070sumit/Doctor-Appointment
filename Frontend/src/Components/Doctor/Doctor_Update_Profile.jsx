@@ -1,12 +1,9 @@
 import React from 'react'
 import Doctor_Header from './Doctor_Header'
 
-function Doctor_Update_Profile() {
+function Doctor_Update_Profile(props) {
   return (
     <div className='flex flex-col '>
-      <div>
-        <Doctor_Header />
-      </div>
       <div className='px-20 py-10 w-full'>
         <div className='grid grid-cols-1 sm:grid-cols-2  '>
           <div className='flex items-center justify-start text-lg font-medium text-[#490B3D] p-2 w-full '>

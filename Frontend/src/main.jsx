@@ -11,6 +11,7 @@ import {
   User_Signup,
 
   //Doctor Imports
+  
   Doctor_Signin,
   Doctor_Signup,
   Doctor_Home,
@@ -19,6 +20,7 @@ import {
   Doctor_Setting,
   Doctor_Update_Profile,
   Doctor_Appointments,
+  Doctor_Layout
 
 } from './Components'
 
@@ -27,8 +29,8 @@ const router = createBrowserRouter(
   createRoutesFromElements(
 
     <Route>
-    <Route path='/doctor'>
-    <Route path='' element={<Doctor_Home/>} />
+    <Route path='/doctor' element={<Doctor_Layout />}>
+    <Route path='home' element={<Doctor_Home/>} />
     <Route path='availability' element={<Doctor_Availability/>} />
     <Route path='mark-leave' element={<Doctor_Mark_Leave/>} />
     <Route path='appointments' element={<Doctor_Appointments/>} />

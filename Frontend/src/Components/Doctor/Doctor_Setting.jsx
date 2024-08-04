@@ -4,10 +4,7 @@ import Doctor_Header from './Doctor_Header'
 
 function Doctor_Setting() {
   return (
-    <div className='flex'>
-      <div>
-        <Doctor_Header />
-      </div>
+    <div className='flex w-full'>
       <div className="pl-5 w-full flex flex-col">
         <div className="h-24 border bg-gradient-to-r from-gray-300 to-yellow-700"></div>
         <div className="flex flex-col items-center lg:flex-row px-3 gap-x-2 lg:h-40">

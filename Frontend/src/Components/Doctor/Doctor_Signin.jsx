@@ -18,16 +18,11 @@ function Doctor_Signin() {
             const doctorInfo=response.data.data.doctor
             localStorage.setItem('accessToken', response.data.data.accessToken)
             localStorage.setItem('refreshToken',response.data.data.refreshToken)
-            navigate('/doctor',{state:doctorInfo})
+            navigate('/doctor/home',{state:doctorInfo})
         } catch (error) {
-            const $ = cheerio.load(error.response.data);
-            const apiErrorMessage = $('pre').text().trim();
-            const errorMessage = apiErrorMessage.replace(/^Error: /, '').split('at')[0].trim();
-            setErrorMessage(errorMessage);
+           setErrorMessage(error.response.data.message) 
         }
     }
-
-
     return (
         <div className='flex flex-col items-center justify-center'>
             <header

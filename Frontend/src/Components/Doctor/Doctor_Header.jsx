@@ -4,7 +4,7 @@ import { useLocation,useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import cheerio from 'cheerio'
 
-function Doctor_Header(props) {
+function Doctor_Header() {
     const location = useLocation();
     const [showLogoutMenu, setShowLogoutMenu] = useState(false)
     const [menuOpen, setMenuOpen] = useState(false);
@@ -12,9 +12,7 @@ function Doctor_Header(props) {
     
 
     const logout=async()=>{
-        console.log("Clicked Logout button");   
-
-        
+        console.log("Clicked Logout button");           
         try {
             const accessToken = localStorage.getItem('accessToken');
             const response = await axios.post('http://localhost:3000/api/v1/doctor/logout',{}, {
@@ -93,7 +91,9 @@ function Doctor_Header(props) {
                         <li className={`${location.pathname === '/doctor/update-profile' ? 'bg-[#BD1E51] rounded-lg shadow-2xl' : 'bg-white'} p-1`}>
                             <Link
                                 className=''
-                                to="/doctor/update-profile">
+                                to={{
+                                }}
+                                >
                                 <svg
                                     className={`${location.pathname === '/doctor/update-profile' ? 'fill-white' : 'fill-[#490B3D]'}`}
                                     xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 -960 960 960" width="30px" fill="#490B3D"><path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z" /></svg>
@@ -109,7 +109,7 @@ function Doctor_Header(props) {
                             onMouseOver={() => setShowLogoutMenu(true)}
                             onMouseOut={() => setShowLogoutMenu(false)}
                         >
-                            <img src={props.doctorInfo.profilePicture} />
+                            <img src=''/>
                         </li>
                     </ul>
                 </div>
@@ -217,7 +217,7 @@ function Doctor_Header(props) {
                         </div>
                         <div className="hidden md:block relative flex items-center ">
                             <img
-                                src={props.doctorInfo.profilePicture}
+                                src=''
                                 alt="Profile"
                                 className="w-10 h-10 rounded-full border cursor-pointer"
                                 onClick={() => setShowLogoutMenu(!showLogoutMenu)}

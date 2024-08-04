@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
-import { NavLink, Link } from 'react-router-dom'
+import { NavLink, Link,Navigate, useNavigate } from 'react-router-dom'
 import cheerio from 'cheerio'
 import axios from 'axios'
+
 
 function Doctor_Signup() {
     const [firstName,setFirstName]=useState('')
@@ -12,6 +13,7 @@ function Doctor_Signup() {
     const [confirmPassword,setConfirmPassword]=useState('')
     const[checkbox,setCheckBox]=useState(false)
     const [errorMessage,setErrorMessage]=useState('')
+    const navigate=useNavigate('')
 
 
     async function signup(e){
@@ -35,15 +37,11 @@ function Doctor_Signup() {
 
         try {
             const response=await axios.post('https://doctor-appointment-ashy.vercel.app/api/v1/doctor/register',{firstName,lastName,email,phone,password})
-            console.log(response);
+            
+            navigate('/doctor/login')
             
         } catch (error) {
-            const $ = cheerio.load(error.response.data);
-            const apiErrorMessage = $('pre').text().trim();
-            const errorMessage = apiErrorMessage.replace(/^Error: /, '').split('at')[0].trim();
-            console.log(error);
-            
-            setErrorMessage(errorMessage);
+            setErrorMessage(error.response.data.message) 
         }
         
     }
