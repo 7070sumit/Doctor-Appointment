@@ -20,7 +20,6 @@ import {
   Doctor_Setting,
   Doctor_Update_Profile,
   Doctor_Appointments,
-  Doctor_Layout
 
 } from './Components'
 
@@ -29,7 +28,7 @@ const router = createBrowserRouter(
   createRoutesFromElements(
 
     <Route>
-    <Route path='/doctor' element={<Doctor_Layout />}>
+    <Route path='/doctor'>
     <Route path='home' element={<Doctor_Home/>} />
     <Route path='availability' element={<Doctor_Availability/>} />
     <Route path='mark-leave' element={<Doctor_Mark_Leave/>} />
@@ -45,6 +44,7 @@ const router = createBrowserRouter(
       <Route path='doctor'>
         <Route path='login' element={<Doctor_Signin/>} />
         <Route path='register' element={<Doctor_Signup/>} />
+        <Route path='home' element={<Doctor_Home/>} />
       </Route>
       </Route>
     </Route>

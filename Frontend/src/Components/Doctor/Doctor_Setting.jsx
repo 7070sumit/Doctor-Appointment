@@ -1,17 +1,26 @@
 import React from 'react'
 import Doctor_Header from './Doctor_Header'
+import { useLocation } from 'react-router-dom'
 
 
 function Doctor_Setting() {
+  const location = useLocation();
+  const doctorInfo=location.state
+  
+
   return (
-    <div className='flex w-full'>
+    <div className='flex'>
+      <div>
+        <Doctor_Header  doctorInfo={doctorInfo}/>
+      </div>
+      <div className='flex w-full'>
       <div className="pl-5 w-full flex flex-col">
         <div className="h-24 border bg-gradient-to-r from-gray-300 to-yellow-700"></div>
         <div className="flex flex-col items-center lg:flex-row px-3 gap-x-2 lg:h-40">
           <div className="relative -top-8 lg:-top-8 md:-top-10 flex items-center justify-center">
             <img
               className="w-32  h-32 md:w-48 md:h-48 lg:w-[200px] lg:h-[200px] rounded-full shadow-lg shadow-[#BD1E51]"
-              src="https://cdn4.sharechat.com/compressed_gm_40_img_47114_a0a7ce5_1694520044647_sc.jpg?tenant=sc&referrer=pwa-sharechat-service&f=647_sc.jpg"
+              src={doctorInfo.profilePicture}
               alt="User Profile Picture"
             />
             <button className="p-1 relative top-10 md:top-16 lg:top-[70px] -left-4 md:-left-6 lg:-left-10 border border-white bg-[#F1B814] rounded-full hover:bg-[#f7d56e] duration-500">
@@ -29,10 +38,10 @@ function Doctor_Setting() {
           <div className="px-5 py-5 w-full lg:w-3/4 flex items-start justify-between">
             <div className="text-[#490B3D] flex flex-col gap-y-1">
               <p className="text-2xl md:text-3xl lg:text-4xl font-medium">
-                <span className="text-2xl md:text-3xl lg:text-4xl">Dr.</span> Sumit Kumar Mahto
+                <span className="text-2xl md:text-3xl lg:text-4xl">Dr.</span> {doctorInfo.firstName} {doctorInfo.lastName}
               </p>
-              <p className="text-lg md:text-xl">BTech</p>
-              <p className="text-lg md:text-xl">Computer Science and Technology</p>
+              <p className="text-lg md:text-xl">{doctorInfo.degree}</p>
+              <p className="text-lg md:text-xl">{doctorInfo.specialization}</p>
             </div>
             <div>
               <button className="flex border p-1 px-3 rounded-lg bg-gray-200 hover:bg-gray-100 duration-200">
@@ -78,6 +87,8 @@ function Doctor_Setting() {
 
       </div>
     </div>
+    </div>
+    
   )
 }
 

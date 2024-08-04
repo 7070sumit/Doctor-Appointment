@@ -20,7 +20,6 @@ import Doctor_Mark_Leave from "./Doctor/Doctor_Mark_Leave";
 import Doctor_Setting from "./Doctor/Doctor_Setting";
 import Doctor_Update_Profile from "./Doctor/Doctor_Update_Profile";
 import Doctor_Appointments from "./Doctor/Doctor_Appointments";
-import Doctor_Layout from "./Doctor/Doctor_Layout";
 
 export {
     Header,
@@ -43,7 +42,6 @@ export {
     Doctor_Setting,
     Doctor_Update_Profile,
     Doctor_Appointments,
-    Doctor_Layout,
     
 
 

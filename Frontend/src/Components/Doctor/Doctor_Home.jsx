@@ -40,16 +40,21 @@ function Doctor_Home() {
 
 
 
-
   return (
-    <div className="flex flex-col lg:flex-row w-full">
+    <div className='flex flex-col lg:flex-row '>
+      <div>
+        <Doctor_Header doctorInfo={doctorInfo}/>
+      </div>
+
+
+      <div className="flex flex-col lg:flex-row w-full">
       <div className="lg:pl-5 w-full flex flex-col">
         <div className="h-24 border bg-gradient-to-r from-gray-300 to-yellow-700"></div>
         <div className="flex flex-col items-center lg:flex-row px-3 gap-x-2 lg:h-40">
           <div className="relative -top-8 lg:-top-8 md:-top-10 flex items-center justify-center">
             <img
               className="w-32  h-32 md:w-48 md:h-48 lg:w-[200px] lg:h-[200px] rounded-full shadow-lg shadow-[#BD1E51]"
-              src=''
+              src={doctorInfo.profilePicture}
               alt="User Profile Picture"
             />
             <button className="p-1 relative top-10 md:top-16 lg:top-[70px] -left-4 md:-left-6 lg:-left-10 border border-white bg-[#F1B814] rounded-full hover:bg-[#f7d56e] duration-500">
@@ -67,10 +72,10 @@ function Doctor_Home() {
           <div className="px-5 py-5 w-full lg:w-3/4 flex items-start justify-between">
             <div className="text-[#490B3D] flex flex-col gap-y-1">
               <p className="text-2xl md:text-3xl lg:text-4xl font-medium">
-                <span className="text-2xl md:text-3xl lg:text-4xl">Dr.&nbsp;</span>
+                <span className="text-2xl md:text-3xl lg:text-4xl">Dr. </span>{doctorInfo.firstName} {doctorInfo.lastName}
               </p>
-              <p className="text-lg md:text-xl"></p>
-              <p className="text-lg md:text-xl"></p>
+              <p className="text-lg md:text-xl">{doctorInfo.degree}</p>
+              <p className="text-lg md:text-xl">{doctorInfo.specialization}</p>
             </div>
             <div>
               <button className="flex border p-1 px-3 rounded-lg bg-gray-200 hover:bg-gray-100 duration-200">
@@ -101,7 +106,7 @@ function Doctor_Home() {
               <input
                 className="border rounded-lg border-gray-300 bg-white px-2 w-full lg:w-5/6"
                 disabled
-                value=''
+                value={doctorInfo.email}
                 type="text"
               />
             </li>
@@ -110,7 +115,7 @@ function Doctor_Home() {
               <input
                 className="border rounded-lg border-gray-300 bg-white px-2 w-full lg:w-5/6"
                 disabled
-                value=''
+                value={doctorInfo.phone}
                 type="Number"
               />
             </li>
@@ -149,6 +154,10 @@ function Doctor_Home() {
         </div>
       </div>
     </div>
+
+    </div>
+    
+    
   )
 }
 

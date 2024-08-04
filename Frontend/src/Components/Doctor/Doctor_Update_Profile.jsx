@@ -1,16 +1,24 @@
 import React from 'react'
 import Doctor_Header from './Doctor_Header'
+import { useLocation } from 'react-router-dom'
 
-function Doctor_Update_Profile(props) {
+function Doctor_Update_Profile() {
+
+  const location = useLocation();
+  const doctorInfo=location.state
   return (
-    <div className='flex flex-col '>
+    <div className='flex'>
+      <div>
+        <Doctor_Header doctorInfo={doctorInfo} />
+      </div>
+      <div className='flex flex-col '>
       <div className='px-20 py-10 w-full'>
         <div className='grid grid-cols-1 sm:grid-cols-2  '>
           <div className='flex items-center justify-start text-lg font-medium text-[#490B3D] p-2 w-full '>
             <label className=''>Firstname:</label>
             <input
               className='ml-2 border w-full mr-10 outline-0 rounded-lg p-[1px] pl-3 text-[#BD1E51]'
-              value=""
+              value={doctorInfo.firstName}
               disabled
               type="text" />
           </div>
@@ -163,6 +171,8 @@ function Doctor_Update_Profile(props) {
       </div>
       
     </div>
+    </div>
+    
     
     
   )

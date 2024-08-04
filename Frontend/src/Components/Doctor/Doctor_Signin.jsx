@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { NavLink, Link, useNavigate } from 'react-router-dom'
-import cheerio from 'cheerio'
 import axios from 'axios'
 
 function Doctor_Signin() {
@@ -12,6 +11,7 @@ function Doctor_Signin() {
     async function signin() {
         if (!email || !password) {
             alert('Both the fields are required.')
+            return;
         }
         try {
             const response = await axios.post('https://doctor-appointment-ashy.vercel.app/api/v1/doctor/login', { email, password })
