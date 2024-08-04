@@ -26,7 +26,7 @@ function Doctor_Update_Profile() {
             <label className=''>Lastname:</label>
             <input
               className='ml-2 border w-full mr-10 outline-0 rounded-lg p-[1px] pl-3 text-[#BD1E51]'
-              value=""
+              value={doctorInfo.lastName}
               disabled
               type="text" />
           </div>
@@ -34,7 +34,7 @@ function Doctor_Update_Profile() {
             <label className=''>Email:</label>
             <input
               className='ml-2 border w-full mr-10 outline-0 rounded-lg p-[1px] pl-3 text-[#BD1E51] '
-              value=""
+              value={doctorInfo.email}
               placeholder='xyz@gmail.com'
               type="email" />
           </div>
@@ -42,7 +42,7 @@ function Doctor_Update_Profile() {
             <label className=''>Phone:</label>
             <input
               className='ml-2 border w-full mr-10 outline-0 rounded-lg p-[1px] pl-3 text-[#BD1E51]'
-              value=""
+              value={doctorInfo.phone}
               placeholder='+91-1234567890'
               type="tel" />
           </div>
@@ -50,7 +50,7 @@ function Doctor_Update_Profile() {
             <label className=''>Specialization:</label>
             <input
               className='ml-2 border w-full mr-10 outline-0 rounded-lg p-[1px] pl-3 text-[#BD1E51]'
-              value=""
+              value={doctorInfo.specialization}
               placeholder='Heart Surgeon'
               type="text" />
           </div>
@@ -58,17 +58,17 @@ function Doctor_Update_Profile() {
             <label className='p-2' for="experience">Experience: </label>
               <select className='border-2 border-[#F1B814]' name="Experience" id="Experience">
                 
-                <option value="" className=''>0-2 Years</option>
-                <option value="" className=''>2-5 Years</option>
-                <option value="" className=''>5-7 Years</option>
-                <option value="" className=''>7 & Above</option>
+                <option value={doctorInfo.experience} className=''>0-2 Years</option>
+                <option value={doctorInfo.experience} className=''>2-5 Years</option>
+                <option value={doctorInfo.experience} className=''>5-7 Years</option>
+                <option value={doctorInfo.experience} className=''>7 & Above</option>
               </select>
           </div>
           <div className='flex items-center justify-start p-2 text-lg font-medium text-[#490B3D]'>
             <label className=''>Degree: </label>
             <input
               className='ml-2 border w-full mr-10 outline-0 rounded-lg p-[1px] pl-3 text-[#BD1E51]'
-              value=""
+              value={doctorInfo.degree}
               placeholder='MBBS'
               type="text" />
           </div>
@@ -76,7 +76,7 @@ function Doctor_Update_Profile() {
             <label className=''>Appointment Fee</label>
             <input
               className='ml-2 border w-full mr-10 outline-0 rounded-lg p-[1px] pl-3 text-[#BD1E51]'
-              value=""
+              value={doctorInfo.appointmentFee}
               placeholder='***/-'
               type="number" />
           </div>
@@ -95,14 +95,14 @@ function Doctor_Update_Profile() {
             <label className=''>Street</label>
             <input
               className='ml-2 border w-1/2 outline-0 rounded-lg p-[1px] pl-3 text-[#BD1E51]'
-              value=""
+              value={doctorInfo.clinicAddress.street}
               type="text" />
           </div>
           <div className='flex items-center justify-center text-lg font-medium text-[#490B3D]'>
             <label className=''>City</label>
             <input
               className='ml-2 border w-1/2 outline-0 rounded-lg p-[1px] pl-3 text-[#BD1E51]'
-              value=""
+              value={doctorInfo.clinicAddress.city}
               type="text" />
           </div>
           <div>
@@ -157,14 +157,14 @@ function Doctor_Update_Profile() {
             <label className=''>Pin-Code</label>
             <input
               className='ml-2 border w-1/2 outline-0 rounded-lg p-[1px] pl-3 text-[#BD1E51]'
-              
+              value={doctorInfo.clinicAddress.pincode}
               type="number" />
           </div>
           <div className='flex items-center justify-center text-lg font-medium text-[#490B3D]'>
             <label className=''>Clinic Contact</label>
             <input
               className='ml-2 border w-1/2 outline-0 rounded-lg p-[1px] pl-3 text-[#BD1E51]'
-              
+              value={doctorInfo.phone}
               type="tel" />
           </div>
         </div>
