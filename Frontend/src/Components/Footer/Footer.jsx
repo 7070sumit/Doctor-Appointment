@@ -2,7 +2,7 @@ import React from 'react'
 
 function Footer() {
   return (
-    <div>
+    <div className='mt-10'>
       <footer>
         <div className='flex   justify-evenly bg-[#F1B814]'>
           <div className='p-4'>
