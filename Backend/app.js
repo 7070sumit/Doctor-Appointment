@@ -4,6 +4,26 @@ import cookieParser from 'cookie-parser'
 
 const app=express()
 
+app.use((err, req, res, next) => {
+  console.error(err.stack); // Log the error stack trace
+
+  if (err instanceof ApiError) {
+    res.status(err.statusCode).json({
+      message: err.message,
+      success: err.success,
+      errors: err.errors,
+     
+    });
+  } else {
+    res.status(500).json({
+      message: 'Internal Server Error',
+      success: false,
+      errors: [],
+     
+    });
+  }
+});
+
 
 const corsOptions = {
   origin: 'http://localhost:5173', // Update this to your frontend domain
