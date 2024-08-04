@@ -188,9 +188,9 @@ const updateProfile = asyncHandler(async (req, res) => {
 
     const { specialization, experience, degree, street, city, fullAddress, state, pincode, clinicPhone, appointmentFee } = req.body
 
-    if (!specialization || !experience || !degree || !street || !city || !fullAddress || !state || !pincode || !clinicPhone || !appointmentFee) {
-        throw new ApiError(400, "All fields are required.")
-    }
+    // if (!specialization || !experience || !degree || !street || !city || !fullAddress || !state || !pincode || !clinicPhone || !appointmentFee) {
+    //     throw new ApiError(400, "All fields are required.")
+    // }
 
     const newDoctor = await Doctor.updateOne({ _id: req.doctor._id },
         {

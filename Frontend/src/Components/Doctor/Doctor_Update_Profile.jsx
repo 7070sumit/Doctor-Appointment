@@ -19,14 +19,12 @@ function Doctor_Update_Profile() {
   const [fullAddress, setFullAddress] = useState(doctorInfo.clinicAddress.fullAddress)
   const [clinicPhone, setClinicPhone] = useState(doctorInfo.clinicAddress.clinicPhone)
   const [pincode, setPincode] = useState(doctorInfo.clinicAddress.pincode)
-  const [change,setChange]=useState(true)
+  const [change,setChange]=useState(false)
   const [errorMessage,setErrorMessage]=useState('')
-  // console.log(message);
-  
   
 
   useEffect(() => {
-    setChange(!change)
+    setChange(true)
   }, [
     lastName,
     specialization,
@@ -44,24 +42,27 @@ function Doctor_Update_Profile() {
   async function updateProfile(){
     console.log(change);
     
-    if(!change){
-      setErrorMessage('No changes detected.')
-      return
-    }
+
+    // if(!change){
+    //   setErrorMessage('No changes detected.')
+    //   return
+    // }
     try {
       const accessToken = localStorage.getItem('accessToken');
-      const response=await axios.patch('https://doctor-appointment-ashy.vercel.app/api/v1/doctor/login',{specialization,experience,degree,street,city,fullAddress,state,pincode,clinicPhone,appointmentFee},
+      const response=await axios.patch('https://doctor-appointment-ashy.vercel.app/api/v1/doctor/update-profile',{specialization,experience,degree,street,city,fullAddress,state,pincode,clinicPhone,appointmentFee},
         {
           withCredentials: true,
           headers: {
               Authorization: `Bearer ${accessToken}`,
           },
       })
+      console.log("In Response");
+      
       console.log(response);
       
     } catch (error) {
       console.log(error);
-      
+      console.log("In Error");
       setErrorMessage(error.response.data.message)
     }
     
