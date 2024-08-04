@@ -99,7 +99,8 @@ const loginDoctor = asyncHandler(async (req, res) => {
     //match password
     //create access and refresh token
     //return response---->send doctor data and cookies
-
+    console.log(('Inlogin'));
+    
     const { email, password } = req.body
 
 
