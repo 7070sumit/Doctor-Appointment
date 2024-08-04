@@ -49,15 +49,18 @@ function Doctor_Update_Profile() {
               placeholder='Heart Surgeon'
               type="text" />
           </div>
-          <div className='flex items-center justify-start p-2 text-lg font-medium text-[#490B3D]'>
-            <label className=''>Experience:</label>
-            <input
-              className='ml-2 border w-full mr-10 outline-0 rounded-lg p-[1px] pl-3 text-[#BD1E51]'
-              value=""
-              type="text" />
+          <div className='flex items-center justify-start  text-lg font-medium text-[#490B3D]'>
+            <label className='p-2' for="experience">Experience: </label>
+              <select className='border-2 border-[#F1B814]' name="Experience" id="Experience">
+                
+                <option value="" className=''>0-2 Years</option>
+                <option value="" className=''>2-5 Years</option>
+                <option value="" className=''>5-7 Years</option>
+                <option value="" className=''>7 & Above</option>
+              </select>
           </div>
           <div className='flex items-center justify-start p-2 text-lg font-medium text-[#490B3D]'>
-            <label className=''>Degree:</label>
+            <label className=''>Degree: </label>
             <input
               className='ml-2 border w-full mr-10 outline-0 rounded-lg p-[1px] pl-3 text-[#BD1E51]'
               value=""
@@ -104,7 +107,7 @@ function Doctor_Update_Profile() {
           <div className='flex items-center justify-center  text-lg font-medium text-[#490B3D]'>
             <label className='p-2' for="state">State</label>
             <select className='border-2 border-[#F1B814]' name="state" id="state">
-              <option value="" className=''>Select state</option>
+              <option value="" className='text-slate-400'>Select state</option>
               <option value="AN">Andaman and Nicobar Islands</option>
               <option value="AP">Andhra Pradesh</option>
               <option value="AR">Arunachal Pradesh</option>
