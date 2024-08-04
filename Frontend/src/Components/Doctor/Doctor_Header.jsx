@@ -16,7 +16,7 @@ function Doctor_Header(props) {
         console.log("Clicked Logout button");
         try {
             const accessToken = localStorage.getItem('accessToken');
-            const response = await axios.post('http://localhost:3000/api/v1/doctor/logout', {}, {
+            const response = await axios.post('https://doctor-appointment-ashy.vercel.app/api/v1/doctor/logout', {}, {
                 withCredentials: true,
                 headers: {
                     Authorization: `Bearer ${accessToken}`,
