@@ -30,13 +30,6 @@ const app=express()
 // });
 
 
-app.use((err, req, res, next) => {
-  console.log('Middleware reached with error:', err.message);
-  next(err);
-});
-
-
-
 const corsOptions = {
   origin: 'http://localhost:5173', // Update this to your frontend domain
   credentials: true, // Allow credentials (cookies)
@@ -57,6 +50,32 @@ app.get('/', (req, res) => {
   
 app.use('/api/v1/doctor',doctorRouter)
 app.use('/api/v1/user',userRouter)
+
+
+app.use((err, req, res, next) => {
+  console.error('Error handling middleware triggered');
+  console.error(err.stack); // Log the error stack trace
+
+  if (err instanceof ApiError) {
+    console.log('Handling ApiError:', err.message);
+    res.status(err.statusCode).json({
+      message: err.message,
+      success: err.success,
+      errors: err.errors,
+      // Optionally include the stack trace in the response
+      // stack: err.stack
+    });
+  } else {
+    console.log('Handling generic error');
+    res.status(500).json({
+      message: 'Internal Server Error',
+      success: false,
+      errors: [],
+      // Optionally include the stack trace in the response
+      // stack: err.stack
+    });
+  }
+});
 
 
 
