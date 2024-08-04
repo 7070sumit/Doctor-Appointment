@@ -10,31 +10,33 @@ import axios from 'axios'
 
 
 function Doctor_Home() {
+  const location=useLocation();
+  const doctorInfo=location.state
+  
+ 
 
-  const [doctorInfo,setDoctorInfo]=useState('')
-
-  const fetchDoctorInfo =async ()=> {
-    try {
-      const accessToken = localStorage.getItem('accessToken');
-      const response = await axios.get('http://localhost:3000/api/v1/doctor/get-doctor', {
-        withCredentials: true,
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      })
-      setDoctorInfo(response.data.data)
-    } catch (error) {
-      const $ = cheerio.load(error.response.data);
-            const apiErrorMessage = $('pre').text().trim();
-            const errorMessage = apiErrorMessage.replace(/^Error: /, '').split('at')[0].trim();
-            console.log(errorMessage);
+  // const fetchDoctorInfo =async ()=> {
+  //   try {
+  //     const accessToken = localStorage.getItem('accessToken');
+  //     const response = await axios.get('https://doctor-appointment-ashy.vercel.app/api/v1/doctor/get-doctor', {
+  //       withCredentials: true,
+  //       headers: {
+  //         Authorization: `Bearer ${accessToken}`,
+  //       },
+  //     })
+  //     setDoctorInfo(response.data.data)
+  //   } catch (error) {
+  //     const $ = cheerio.load(error.response.data);
+  //           const apiErrorMessage = $('pre').text().trim();
+  //           const errorMessage = apiErrorMessage.replace(/^Error: /, '').split('at')[0].trim();
+  //           console.log(errorMessage);
             
-    }
-  }
+  //   }
+  // }
 
-  useEffect(() => {
-    fetchDoctorInfo();
-  }, []);
+  // useEffect(() => {
+  //   fetchDoctorInfo();
+  // }, [doctorInfo]);
 
 
 

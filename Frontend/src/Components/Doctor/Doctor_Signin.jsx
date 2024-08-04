@@ -14,10 +14,11 @@ function Doctor_Signin() {
             alert('Both the fields are required.')
         }
         try {
-            const response = await axios.post('http://localhost:3000/api/v1/doctor/login', { email, password })
+            const response = await axios.post('https://doctor-appointment-ashy.vercel.app/api/v1/doctor/login', { email, password })
+            const doctorInfo=response.data.data.doctor
             localStorage.setItem('accessToken', response.data.data.accessToken)
             localStorage.setItem('refreshToken',response.data.data.refreshToken)
-            navigate('/doctor')
+            navigate('/doctor',{state:doctorInfo})
         } catch (error) {
             const $ = cheerio.load(error.response.data);
             const apiErrorMessage = $('pre').text().trim();
