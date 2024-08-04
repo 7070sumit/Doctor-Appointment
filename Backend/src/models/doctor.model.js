@@ -27,19 +27,22 @@ const doctorSchema = new Schema(
         },
         specialization: {
             type: String,
+            default:"Others",
         },
         experience: {
             type: String,
+            default:"0",
         },
         degree: {
             type: String,
+            default:"None"
         },
         clinicAddress: {
             street: { type: String},
             street: { type: String},
             city: { type: String},
             fullAddress: { type: String},
-            state: { type: String},
+            state: { type: String,default:"None"},
             pincode: { type: Number},
             clinicPhone: { type: String}
         },
