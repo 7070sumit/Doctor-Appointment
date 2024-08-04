@@ -120,11 +120,11 @@ const loginDoctor = asyncHandler(async (req, res) => {
     }
     const { accessToken, refreshToken } = await generateAccessAndRefreshTokens(doctor._id)
 
-    const loggedInDoctor = await Doctor.findById(doctor._id).select("-password,-refreshToken")
+    const loggedInDoctor = await Doctor.findById(doctor._id).select("-password -refreshToken")
 
     const options = {
         httpOnly: true,
-        secure: true
+        secure: process.env.NODE_ENV === 'production'
     }
 
     return res
@@ -135,7 +135,9 @@ const loginDoctor = asyncHandler(async (req, res) => {
             new ApiResponse(
                 200,
                 {
-                    doctor: loggedInDoctor, accessToken, refreshToken
+                    doctor: loggedInDoctor, 
+                    accessToken:accessToken, 
+                    refreshToken:refreshToken,
                 },
                 "User logged in successfully."
             )
@@ -143,10 +145,24 @@ const loginDoctor = asyncHandler(async (req, res) => {
 
 })
 
-
-const helloHome=asyncHandler(async(req,res)=>{
-    return res('<h1>Hello From Doctor</h1>')
+const getDoctor=asyncHandler(async(req,res)=>{
+    
+    const doctor=await Doctor.findById(req.doctor._id)
+    if (!doctor) {
+        throw new ApiError(500,"Something went wrong while fetching doctor information.")
+    }
+    return res
+    .status(200)
+    .json(
+        new ApiResponse(
+            200,
+            doctor,
+            "Doctor fetched successfully"
+        )
+    )
+    
 })
+
 
 const logoutDoctor = asyncHandler(async (req, res) => {
 
@@ -400,4 +416,4 @@ const getDoctorAppointments=asyncHandler(async(req,res)=>{
 
 
 
-export { registerDoctor, loginDoctor, logoutDoctor, updateProfile, updateProfilePicture, listDoctorOnWebsite, doctorAvailability, doctorMarkLeave,getDoctorAppointments,helloHome }
+export { registerDoctor, loginDoctor, logoutDoctor, updateProfile, updateProfilePicture, listDoctorOnWebsite, doctorAvailability, doctorMarkLeave,getDoctorAppointments,getDoctor }

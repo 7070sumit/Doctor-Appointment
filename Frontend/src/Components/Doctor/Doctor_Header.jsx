@@ -1,20 +1,46 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { useLocation } from 'react-router-dom'
+import { useLocation,useNavigate } from 'react-router-dom'
+import axios from 'axios'
+import cheerio from 'cheerio'
 
-function Doctor_Header() {
+function Doctor_Header(props) {
     const location = useLocation();
     const [showLogoutMenu, setShowLogoutMenu] = useState(false)
     const [menuOpen, setMenuOpen] = useState(false);
-    // useEffect({
-    //     setShowLogoutMenu(false)
-    // })
+    const navigate=useNavigate()
+    
+
+    const logout=async()=>{
+        console.log("Clicked Logout button");   
+
+        
+        try {
+            const accessToken = localStorage.getItem('accessToken');
+            const response = await axios.post('http://localhost:3000/api/v1/doctor/logout',{}, {
+              withCredentials: true,
+              headers: {
+                Authorization: `Bearer ${accessToken}`,
+              },
+            })
+            localStorage.clear();
+            navigate('/doctor/login')
+        } catch (error) {
+            // const $ = cheerio.load(error.response.data);
+            // const apiErrorMessage = $('pre').text().trim();
+            // const errorMessage = apiErrorMessage.replace(/^Error: /, '').split('at')[0].trim();
+            // console.log(errorMessage);
+            console.log(error);
+            
+        }
+    }
+
 
     return (
 
         <div>
 
-             {/* Vertical Navigation bar for lg screen */}
+            {/* Vertical Navigation bar for lg screen */}
             <div className='p-1 ml-2 w-[60px] h-screen shadow-2xl hidden lg:block'>
                 <div className='flex flex-col items-center justify-center h-[90%]'>
                     <ul className='flex flex-col gap-y-4'>
@@ -83,7 +109,7 @@ function Doctor_Header() {
                             onMouseOver={() => setShowLogoutMenu(true)}
                             onMouseOut={() => setShowLogoutMenu(false)}
                         >
-                            <img src="https://cdn4.sharechat.com/compressed_gm_40_img_47114_a0a7ce5_1694520044647_sc.jpg?tenant=sc&referrer=pwa-sharechat-service&f=647_sc.jpg" />
+                            <img src={props.doctorInfo.profilePicture} />
                         </li>
                     </ul>
                 </div>
@@ -97,12 +123,12 @@ function Doctor_Header() {
                             <div className='flex items-center justify-center'>
                                 <div>
                                     <section className='rounded-full w-10 h-10 border overflow-hidden'>
-                                        <img src="https://cdn4.sharechat.com/compressed_gm_40_img_47114_a0a7ce5_1694520044647_sc.jpg?tenant=sc&referrer=pwa-sharechat-service&f=647_sc.jpg" />
+                                        <img src={props.doctorInfo.profilePicture}/>
                                     </section>
                                 </div>
                                 <div className='ml-2'>
-                                    <p className='text-base font-medium'>Sumit Kumar Mahto</p>
-                                    <p className='text-gray-500 -mt-1' >sumit@gmail.com</p>
+                                    <p className='text-base font-medium'>{props.doctorInfo.firstName}&nbsp;{props.doctorInfo.lastName}</p>
+                                    <p className='text-gray-500 -mt-1' >{props.doctorInfo.email}</p>
                                 </div>
                             </div>
                             <div className='w-full'>
@@ -134,12 +160,13 @@ function Doctor_Header() {
                             <div>
                                 <ul className='px-[1px]'>
                                     <li className='px-4 py-[1px] flex w-full rounded-lg hover:bg-[#f5bdcf] duration-100'>
-                                        <Link
+                                        <button
+                                            onClick={logout}
                                             className='flex items-center justify-center'
                                         >
                                             <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#490B3D"><path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h280v80H200Zm440-160-55-58 102-102H360v-80h327L585-622l55-58 200 200-200 200Z" /></svg>
                                             <p className='ml-1 text-base font-medium text-[#490B3D]'>Logout</p>
-                                        </Link>
+                                        </button>
                                     </li>
                                 </ul>
                             </div>
@@ -152,82 +179,85 @@ function Doctor_Header() {
 
             </div>
 
-           {/* Horizontal Navigation bar for sm and md screen */}
+            {/* Horizontal Navigation bar for sm and md screen */}
 
             <nav className="bg-white shadow-lg lg:hidden">
-            <div className="max-w-6xl mx-auto px-4">
-                <div className="flex justify-between items-center">
-                    <div className="flex space-x-7">
-                        <Link to="/" className="flex items-center py-4 px-2">
-                            <span className="font-semibold text-gray-500 text-lg">LOGO</span>
-                        </Link>
-                    </div>
-                    <div className="hidden md:flex items-center space-x-1 text-[#490B3D]">
-                        <Link to="/" className="py-4 px-2">
-                            Home
-                        </Link>
-                        <Link to="/appointments" className="py-4 px-2">
-                            Appointments
-                        </Link>
-                        <Link to="/availability" className="py-4 px-2">
-                            Availability
-                        </Link>
-                        <Link to="/leaves" className="py-4 px-2">
-                            Leaves
-                        </Link>
-                        <Link to="/settings" className="py-4 px-2">
-                            Setting
-                        </Link>
-                        <Link to="/edit-profile" className="py-4 px-2">
-                            Edit Profile
-                        </Link>
-                    </div>
-                    <div className="md:hidden flex items-center">
-                        <button className="outline-none mobile-menu-button" onClick={() => setMenuOpen(!menuOpen)}>
-                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#490B3D"><path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z"/></svg>
-                        </button>
-                    </div>
-                    <div className="hidden md:block relative flex items-center ">
-                        <img
-                            src="https://cdn4.sharechat.com/compressed_gm_40_img_47114_a0a7ce5_1694520044647_sc.jpg?tenant=sc&referrer=pwa-sharechat-service&f=647_sc.jpg"
-                            alt="Profile"
-                            className="w-10 h-10 rounded-full border cursor-pointer"
-                            onClick={() => setShowLogoutMenu(!showLogoutMenu)}
-                           
-                        />
-                        {showLogoutMenu && (
-                            <button className="absolute mt-2 right-0 flex items-center justify-center bg-white border border-gray-200 shadow-lg py-2 px-4 text-[#490B3D] text-sm rounded-lg z-10">
-                               <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#490B3D"><path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h280v80H200Zm440-160-55-58 102-102H360v-80h327L585-622l55-58 200 200-200 200Z"/></svg>
-                               <p className='ml-1'>Logout</p>
+                <div className="max-w-6xl mx-auto px-4">
+                    <div className="flex justify-between items-center">
+                        <div className="flex space-x-7">
+                            <Link to="/" className="flex items-center py-4 px-2">
+                                <span className="font-semibold text-gray-500 text-lg">LOGO</span>
+                            </Link>
+                        </div>
+                        <div className="hidden md:flex items-center space-x-1 text-[#490B3D]">
+                            <Link to="/" className="py-4 px-2">
+                                Home
+                            </Link>
+                            <Link to="/appointments" className="py-4 px-2">
+                                Appointments
+                            </Link>
+                            <Link to="/availability" className="py-4 px-2">
+                                Availability
+                            </Link>
+                            <Link to="/leaves" className="py-4 px-2">
+                                Leaves
+                            </Link>
+                            <Link to="/settings" className="py-4 px-2">
+                                Setting
+                            </Link>
+                            <Link to="/edit-profile" className="py-4 px-2">
+                                Edit Profile
+                            </Link>
+                        </div>
+                        <div className="md:hidden flex items-center">
+                            <button
+                            className="outline-none mobile-menu-button" onClick={() => (setMenuOpen(!menuOpen))}>
+                                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#490B3D"><path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z" /></svg>
                             </button>
-                        )}
+                        </div>
+                        <div className="hidden md:block relative flex items-center ">
+                            <img
+                                src={props.doctorInfo.profilePicture}
+                                alt="Profile"
+                                className="w-10 h-10 rounded-full border cursor-pointer"
+                                onClick={() => setShowLogoutMenu(!showLogoutMenu)}
+
+                            />
+                            {showLogoutMenu && (
+                                <button 
+                                onClick={logout}
+                                className="absolute mt-2 right-0 flex items-center justify-center bg-white border border-gray-200 shadow-lg py-2 px-4 text-[#490B3D] text-sm rounded-lg z-10">
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#490B3D"><path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h280v80H200Zm440-160-55-58 102-102H360v-80h327L585-622l55-58 200 200-200 200Z" /></svg>
+                                    <p className='ml-1'>Logout</p>
+                                </button>
+                            )}
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div className={`md:hidden absolute bg-white w-full z-10 flex flex-col items-center border-b opacity-85 text-sm text-[#490B3D] font-medium ${menuOpen ? 'block' : 'hidden'}`}>
-                <Link to="/" className="block py-2 px-">
-                    Home
-                </Link>
-                <Link to="/settings" className="block py-2 px-4">
-                    Appointments
-                </Link>
-                <Link to="/about" className="block py-2 px-4">
-                Availability
-                </Link>
-                <Link to="/about" className="block py-2 px-4 ">
-                Leaves
-                </Link>
-                <Link to="/about" className="block py-2 px-4">
-                Setting
-                </Link>
-                <Link to="/about" className="block py-2 px-4">
-                Edit Profile
-                </Link>
-                <Link to="/about" className="block py-2 px-4">
-                Logout
-                </Link>
-            </div>
-        </nav>
+                <div className={`md:hidden absolute bg-white w-full z-10 flex flex-col items-center border-b opacity-85 text-sm text-[#490B3D] font-medium ${menuOpen ? 'block' : 'hidden'}`}>
+                    <Link to="/" className="block py-2 px-">
+                        Home
+                    </Link>
+                    <Link to="/settings" className="block py-2 px-4">
+                        Appointments
+                    </Link>
+                    <Link to="/about" className="block py-2 px-4">
+                        Availability
+                    </Link>
+                    <Link to="/about" className="block py-2 px-4 ">
+                        Leaves
+                    </Link>
+                    <Link to="/about" className="block py-2 px-4">
+                        Setting
+                    </Link>
+                    <Link to="/about" className="block py-2 px-4">
+                        Edit Profile
+                    </Link>
+                    <Link to="/about" className="block py-2 px-4">
+                        Logout
+                    </Link>
+                </div>
+            </nav>
         </div>
 
 
