@@ -144,6 +144,10 @@ const loginDoctor = asyncHandler(async (req, res) => {
 })
 
 
+const helloHome=asyncHandler(async(req,res)=>{
+    return res('<h1>Hello From Doctor</h1>')
+})
+
 const logoutDoctor = asyncHandler(async (req, res) => {
 
 
@@ -396,4 +400,4 @@ const getDoctorAppointments=asyncHandler(async(req,res)=>{
 
 
 
-export { registerDoctor, loginDoctor, logoutDoctor, updateProfile, updateProfilePicture, listDoctorOnWebsite, doctorAvailability, doctorMarkLeave,getDoctorAppointments }
+export { registerDoctor, loginDoctor, logoutDoctor, updateProfile, updateProfilePicture, listDoctorOnWebsite, doctorAvailability, doctorMarkLeave,getDoctorAppointments,helloHome }
