@@ -28,18 +28,18 @@ router.route('/login').post(loginDoctor)
 router.route('/get-doctor').get(verifyDoctorJWT,getDoctor)
 router.route('/logout').post(verifyDoctorJWT, logoutDoctor)
 router.route('/update-profile').patch(upload.none(), verifyDoctorJWT, updateProfile)
-router.route('/update-profile-picture').patch( verifyDoctorJWT, updateProfilePicture)
+router.route('/update-profile-picture').patch(upload.fields([
+    {
+        name: "profilePicture",
+        maxCount: 1,
+    }
+]),verifyDoctorJWT, updateProfilePicture)
 
 router.route('/go-live').post(upload.none(),verifyDoctorJWT,listDoctorOnWebsite)
 router.route('/mark-availability').post(upload.none(),verifyDoctorJWT,doctorAvailability)
 router.route('/mark-leave').post(upload.none(),verifyDoctorJWT,doctorMarkLeave)
 router.route('/appointments').get(verifyDoctorJWT,getDoctorAppointments)
 
-// upload.fields([
-//     {
-//         name: "profilePicture",
-//         maxCount: 1,
-//     }
-// ]),
+
 
 export default router
