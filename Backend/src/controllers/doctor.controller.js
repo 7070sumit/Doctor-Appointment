@@ -100,7 +100,7 @@ const loginDoctor = asyncHandler(async (req, res) => {
     //create access and refresh token
     //return response---->send doctor data and cookies
     console.log(('Inlogin'));
-    
+
     const { email, password } = req.body
 
 
@@ -136,9 +136,9 @@ const loginDoctor = asyncHandler(async (req, res) => {
             new ApiResponse(
                 200,
                 {
-                    doctor: loggedInDoctor, 
-                    accessToken:accessToken, 
-                    refreshToken:refreshToken,
+                    doctor: loggedInDoctor,
+                    accessToken: accessToken,
+                    refreshToken: refreshToken,
                 },
                 "User logged in successfully."
             )
@@ -146,22 +146,22 @@ const loginDoctor = asyncHandler(async (req, res) => {
 
 })
 
-const getDoctor=asyncHandler(async(req,res)=>{
-    
-    const doctor=await Doctor.findById(req.doctor._id)
+const getDoctor = asyncHandler(async (req, res) => {
+
+    const doctor = await Doctor.findById(req.doctor._id)
     if (!doctor) {
-        throw new ApiError(500,"Something went wrong while fetching doctor information.")
+        throw new ApiError(500, "Something went wrong while fetching doctor information.")
     }
     return res
-    .status(200)
-    .json(
-        new ApiResponse(
-            200,
-            doctor,
-            "Doctor fetched successfully"
+        .status(200)
+        .json(
+            new ApiResponse(
+                200,
+                doctor,
+                "Doctor fetched successfully"
+            )
         )
-    )
-    
+
 })
 
 
@@ -363,21 +363,21 @@ const doctorAvailability = asyncHandler(async (req, res) => {
 
 })
 
-const getDoctorAvailability=asyncHandler(async(req,res)=>{
+const getDoctorAvailability = asyncHandler(async (req, res) => {
     console.log("in get avability route");
-    
-    const availability=await  Availability.findOne({ doctor:req.doctor._id})
-    if(availability){
+
+    const availability = await Availability.findOne({ doctor: req.doctor._id })
+    if (availability) {
         return res.status(200)
-        .json(
-            new ApiResponse(200,availability,"Availability fetched successfully")
-        )
-    }else{
-        return res.status(200)
-        .json(
-            new ApiResponse(200,{},"Doctor has not updated his availability.")
-        )
+            .json(
+                new ApiResponse(200, availability, "Availability fetched successfully")
+            )
     }
+    return res.status(200)
+        .json(
+            new ApiResponse(200, {}, "Doctor has not updated his availability.")
+        )
+
 })
 
 
@@ -411,23 +411,23 @@ const doctorMarkLeave = asyncHandler(async (req, res) => {
 })
 
 
-const getDoctorAppointments=asyncHandler(async(req,res)=>{
+const getDoctorAppointments = asyncHandler(async (req, res) => {
     const doctorAppointments = await Appointments.aggregate([
         {
-          $match: {
-            doctor: new mongoose.Types.ObjectId(req.doctor._id)
-          }
+            $match: {
+                doctor: new mongoose.Types.ObjectId(req.doctor._id)
+            }
         }
-      ]);
-    
-     return res.status(200)
-     .json(
-        new ApiResponse(
-            200,
-            doctorAppointments,
-            "User Appointments Fetched SuccessFully"
+    ]);
+
+    return res.status(200)
+        .json(
+            new ApiResponse(
+                200,
+                doctorAppointments,
+                "User Appointments Fetched SuccessFully"
+            )
         )
-     )
 })
 
 
@@ -437,4 +437,4 @@ const getDoctorAppointments=asyncHandler(async(req,res)=>{
 
 
 
-export { registerDoctor, loginDoctor, logoutDoctor, updateProfile, updateProfilePicture, listDoctorOnWebsite, doctorAvailability, doctorMarkLeave,getDoctorAppointments,getDoctor, getDoctorAvailability }
+export { registerDoctor, loginDoctor, logoutDoctor, updateProfile, updateProfilePicture, listDoctorOnWebsite, doctorAvailability, doctorMarkLeave, getDoctorAppointments, getDoctor, getDoctorAvailability }
