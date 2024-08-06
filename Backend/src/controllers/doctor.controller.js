@@ -375,7 +375,7 @@ const getDoctorAvailability=asyncHandler(async(req,res)=>{
     }else{
         return res.status(200)
         .json(
-            new ApiResponse(200,availability,"Doctor has not updated his availability.")
+            new ApiResponse(200,{},"Doctor has not updated his availability.")
         )
     }
 })
