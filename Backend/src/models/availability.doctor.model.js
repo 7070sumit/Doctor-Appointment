@@ -8,18 +8,16 @@ const availabilitySchema=new Schema({
     clinicDays:{
         type:[Number],
         default:[-1,-2,-3,-4,-5,-6,-7],
-        required:true,
     },
     clinicStartTime:{
         type:String,
-        required:true,
     },
     clinicEndTime:{
         type:String,
-        required:true,
     },
     onlineDays:{
         type:[String],
+        default:[-1,-2,-3,-4,-5,-6,-7],
         
     },
     OnlineStartTime:{
