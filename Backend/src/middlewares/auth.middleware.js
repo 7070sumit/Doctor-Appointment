@@ -6,6 +6,7 @@ import jwt from 'jsonwebtoken'
 
 
 const verifyDoctorJWT = asyncHandler(async (req, res, next) => {
+  console.log("in Verify Doctor JWT");
     const authToken = req.headers.authorization
     if (!authToken) {
       throw new ApiError(401, "Unauthorized access. No Authorization header found.");
