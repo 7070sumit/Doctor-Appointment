@@ -363,6 +363,23 @@ const doctorAvailability = asyncHandler(async (req, res) => {
 
 })
 
+const getDoctorAvailability=asyncHandler(async(req,res)=>{
+    console.log("in get avability route");
+    
+    const availability=await  Availability.findOne({ doctor:req.doctor._id})
+    if(availability){
+        return res.status(200)
+        .json(
+            new ApiResponse(200,availability,"Availability fetched successfully")
+        )
+    }else{
+        return res.status(200)
+        .json(
+            new ApiResponse(200,availability,"Doctor has not updated his availability.")
+        )
+    }
+})
+
 
 const doctorMarkLeave = asyncHandler(async (req, res) => {
     const { date } = req.body
@@ -417,4 +434,7 @@ const getDoctorAppointments=asyncHandler(async(req,res)=>{
 
 
 
-export { registerDoctor, loginDoctor, logoutDoctor, updateProfile, updateProfilePicture, listDoctorOnWebsite, doctorAvailability, doctorMarkLeave,getDoctorAppointments,getDoctor }
+
+
+
+export { registerDoctor, loginDoctor, logoutDoctor, updateProfile, updateProfilePicture, listDoctorOnWebsite, doctorAvailability, doctorMarkLeave,getDoctorAppointments,getDoctor, getDoctorAvailability }

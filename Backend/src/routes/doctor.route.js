@@ -2,7 +2,7 @@ import { Router } from 'express'
 import { upload } from '../middlewares/multer.middleware.js'
 import { verifyDoctorJWT } from '../middlewares/auth.middleware.js'
 
-import { registerDoctor, loginDoctor, logoutDoctor, updateProfile, updateProfilePicture,listDoctorOnWebsite,doctorAvailability,doctorMarkLeave,getDoctorAppointments,getDoctor } from '../controllers/doctor.controller.js'
+import { registerDoctor, loginDoctor, logoutDoctor, updateProfile, updateProfilePicture,listDoctorOnWebsite,doctorAvailability,doctorMarkLeave,getDoctorAppointments,getDoctor, getDoctorAvailability } from '../controllers/doctor.controller.js'
 
 
 const router = Router()
@@ -37,6 +37,7 @@ router.route('/update-profile-picture').patch(upload.fields([
 
 router.route('/go-live').post(upload.none(),verifyDoctorJWT,listDoctorOnWebsite)
 router.route('/mark-availability').post(upload.none(),verifyDoctorJWT,doctorAvailability)
+router.route('/get-availability').get(verifyDoctorJWT,getDoctorAvailability)
 router.route('/mark-leave').post(upload.none(),verifyDoctorJWT,doctorMarkLeave)
 router.route('/appointments').get(verifyDoctorJWT,getDoctorAppointments)
 
