@@ -6,7 +6,8 @@ const availabilitySchema=new Schema({
         ref: "Doctor"
     },
     clinicDays:{
-        type:[String],
+        type:[Number],
+        default:[-1,-2,-3,-4,-5,-6,-7],
         required:true,
     },
     clinicStartTime:{
