@@ -20,11 +20,11 @@ const availabilitySchema=new Schema({
         default:[-1,-2,-3,-4,-5,-6,-7],
         
     },
-    OnlineStartTime:{
+    onlineStartTime:{
         type:String,
        
     },
-    OnlineEndTime:{
+    onlineEndTime:{
         type:String,
         
     },
