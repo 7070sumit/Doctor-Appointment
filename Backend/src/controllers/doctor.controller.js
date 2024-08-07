@@ -315,9 +315,6 @@ const doctorAvailability = asyncHandler(async (req, res) => {
 
     const { clinicDays, clinicStartTime, clinicEndTime, onlineDays, onlineStartTime, onlineEndTime } = req.body
 
-    if (!clinicDays || !clinicStartTime || !clinicEndTime) {
-        throw new ApiError(400, "All fields are required")
-    }
 
     const updateAvailability = await Availability.findOne({ doctor: req.doctor._id })
 
