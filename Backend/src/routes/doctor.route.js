@@ -35,7 +35,7 @@ router.route('/update-profile-picture').patch(upload.fields([
     }
 ]),verifyDoctorJWT, updateProfilePicture)
 
-router.route('/go-live').post(upload.none(),verifyDoctorJWT,listDoctorOnWebsite)
+router.route('/go-live').patch(upload.none(),verifyDoctorJWT,listDoctorOnWebsite)
 router.route('/mark-availability').post(upload.none(),verifyDoctorJWT,doctorAvailability)
 router.route('/get-availability').get(verifyDoctorJWT,getDoctorAvailability)
 router.route('/mark-leave').post(upload.none(),verifyDoctorJWT,doctorMarkLeave)

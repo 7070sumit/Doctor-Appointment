@@ -1,94 +1,175 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Doctor_Header from './Doctor_Header'
-import { useLocation } from 'react-router-dom'
+import { useLocation, Link } from 'react-router-dom'
+import axios from 'axios';
 
 
 function Doctor_Setting() {
   const location = useLocation();
-  const doctorInfo=location.state
-  
+  const doctorInfo = location.state
+  // const [goLive, setGoLive] = useState(doctorInfo.liveOnWebsite)
+  const [showGoLive,setShowGoLive]=useState(doctorInfo.liveOnWebsite)
+
+
+  async function doctorLive(goLive){
+    try {
+      const accessToken = localStorage.getItem('accessToken');
+      const response = await axios.patch('https://doctor-appointment-ashy.vercel.app/api/v1/doctor/go-live',{goLive},
+        {
+          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        })
+        console.log(response);
+        
+    } catch (error) {
+      console.log(error);
+      
+    }
+  }
+
 
   return (
-    <div className='flex'>
+    <div className='flex flex-col lg:flex-row'>
       <div>
-        <Doctor_Header  doctorInfo={doctorInfo}/>
+        <Doctor_Header doctorInfo={doctorInfo} />
       </div>
       <div className='flex w-full'>
-      <div className="pl-5 w-full flex flex-col">
-        <div className="h-24 border bg-gradient-to-r from-gray-300 to-yellow-700"></div>
-        <div className="flex flex-col items-center lg:flex-row px-3 gap-x-2 lg:h-40">
-          <div className="relative -top-8 lg:-top-8 md:-top-10 flex items-center justify-center">
-            <img
-              className="w-32  h-32 md:w-48 md:h-48 lg:w-[200px] lg:h-[200px] rounded-full shadow-lg shadow-[#BD1E51]"
-              src={doctorInfo.profilePicture}
-              alt="User Profile Picture"
-            />
-            <button className="p-1 relative top-10 md:top-16 lg:top-[70px] -left-4 md:-left-6 lg:-left-10 border border-white bg-[#F1B814] rounded-full hover:bg-[#f7d56e] duration-500">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                height="28px"
-                viewBox="0 -960 960 960"
-                width="28px"
-                fill="#BD1E51"
-              >
-                <path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z" />
-              </svg>
-            </button>
+        <div className="pl-5 w-full flex flex-col">
+          <div className="h-24 border bg-gradient-to-r from-gray-300 to-yellow-700"></div>
+
+          <div className='flex  items-center justify-start gap-2'>
+            <svg xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 -960 960 960" width="30px" fill="#490B3D"><path d="m370-80-16-128q-13-5-24.5-12T307-235l-119 50L78-375l103-78q-1-7-1-13.5v-27q0-6.5 1-13.5L78-585l110-190 119 50q11-8 23-15t24-12l16-128h220l16 128q13 5 24.5 12t22.5 15l119-50 110 190-103 78q1 7 1 13.5v27q0 6.5-2 13.5l103 78-110 190-118-50q-11 8-23 15t-24 12L590-80H370Zm70-80h79l14-106q31-8 57.5-23.5T639-327l99 41 39-68-86-65q5-14 7-29.5t2-31.5q0-16-2-31.5t-7-29.5l86-65-39-68-99 42q-22-23-48.5-38.5T533-694l-13-106h-79l-14 106q-31 8-57.5 23.5T321-633l-99-41-39 68 86 64q-5 15-7 30t-2 32q0 16 2 31t7 30l-86 65 39 68 99-42q22 23 48.5 38.5T427-266l13 106Zm42-180q58 0 99-41t41-99q0-58-41-99t-99-41q-59 0-99.5 41T342-480q0 58 40.5 99t99.5 41Zm-2-140Z" /></svg>
+            <h1 className="text-xl md:text-2xl font-medium text-[#490B3D]">Settings</h1>
           </div>
-          <div className="px-5 py-5 w-full lg:w-3/4 flex items-start justify-between">
-            <div className="text-[#490B3D] flex flex-col gap-y-1">
-              <p className="text-2xl md:text-3xl lg:text-4xl font-medium">
-                <span className="text-2xl md:text-3xl lg:text-4xl">Dr.</span> {doctorInfo.firstName} {doctorInfo.lastName}
-              </p>
-              <p className="text-lg md:text-xl">{doctorInfo.degree}</p>
-              <p className="text-lg md:text-xl">{doctorInfo.specialization}</p>
-            </div>
-            <div>
-              <button className="flex border p-1 px-3 rounded-lg bg-gray-200 hover:bg-gray-100 duration-200">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  height="24px"
-                  viewBox="0 -960 960 960"
-                  width="24px"
-                  fill="#000000"
-                >
-                  <path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z" />
-                </svg>
-                <p>Edit Profile</p>
-              </button>
+
+          <div className="mt-4 flex flex-col lg:flex-row items-center justify-center">
+            <hr className="border w-full mr-10 border-[#F1B814]" />
+          </div>
+
+          <div className='mt-10 flex items-center justify-center'>
+            <div className=' grid grid-cols-1 lg:grid-cols-2 gap-x-5 gap-y-10'>
+
+              <div className='flex items-center justify-center'>
+                <div className='p-2 rounded-lg border border-[#F1B814] w-[50%]'>
+                  <div className='flex items-center justify-between'>
+                    <h1 className='text-lg font-medium underline'>Update Profile</h1>
+                    <Link
+                    to='/doctor/update-profile'
+                    state={doctorInfo}
+                     className='px-2 rounded-lg bg-[#BD1E51] text-white font-medium hover:bg-[#e0386e] duration-100'
+                     >
+                      Update Now
+                      </Link>
+                  </div>
+                  <div className=' text-center mt-3'>
+                    <h1 className='font-medium text-gray-500'>Keep your profile information current to ensure a seamless experience on our platform.</h1>
+                  </div>
+                </div>
+              </div>
+
+
+              <div className='flex items-center justify-center'>
+                  
+              <div className='p-2 rounded-lg border border-[#F1B814] w-[50%]'>
+                <div className='flex items-center justify-between'>
+                  <h1 className='text-lg font-medium underline'>Schedule</h1>
+                  <Link 
+                   to="/doctor/availability"
+                   state={doctorInfo}
+                  className='px-2 rounded-lg bg-[#BD1E51] text-white font-medium hover:bg-[#e0386e] duration-100'
+                  >
+                    Update Now
+                  </Link>
+                </div>
+                <div className=' text-center mt-3'>
+                  <h1 className='font-medium text-gray-500'>Maintain an accurate working schedule to ensure effective time management and coordination.</h1>
+                </div>
+              </div>
+              </div>
+
+
+              {
+                showGoLive ? (
+                  <div className='flex items-center justify-center'>
+                     <div className='p-2 rounded-lg border bg-green-100 border-green-500 w-[50%]'>
+                    <div className='flex items-center justify-between'>
+                      <li className='text-lg font-medium underline text-green-500'>Live Status</li>
+                      <button
+                      onClick={()=>{doctorLive(false)}}
+                      className='px-2 rounded-lg bg-red-500 text-white font-medium hover:bg-red-600 duration-100'
+                      >
+                        Go Offline
+                      </button>
+                    </div>
+                    <div className=' text-center mt-3'>
+                      <h1 className='font-medium text-gray-500'>You are currently live on the website, and patients can now book appointments with you directly through the platform.</h1>
+                    </div>
+                  </div>
+
+                  </div>
+
+
+                 
+
+                ) : (
+                  <div className='flex items-center justify-center'>
+                     <div className='p-2 rounded-lg border bg-red-100 border-red-400 w-[50%]'>
+                    <div className='flex items-center justify-between'>
+                      <li className='text-lg font-medium underline text-red-600'>Live Status</li>
+                      <button
+                      onClick={()=>{doctorLive(true)}} 
+                      className='px-2 rounded-lg bg-green-500 text-white font-medium hover:bg-green-600 duration-100'
+                      >
+                        Go Online
+                      </button>
+                    </div>
+                    <div className=' text-center mt-3'>
+                      <h1 className='font-medium text-gray-500'>You are currently live on the website, and patients can now book appointments with you directly through the platform.</h1>
+                    </div>
+                  </div>
+
+                  </div>
+
+
+
+                 
+
+                )
+              }
+
+              <div className='flex items-center justify-center'>
+
+              <div className='p-2 rounded-lg border border-[#F1B814] w-[50%]'>
+                <div className='flex items-center justify-between'>
+                  <h1 className='text-lg font-medium underline'>Plan Leave</h1>
+                  <button className='px-2 rounded-lg bg-[#BD1E51] text-white font-medium hover:bg-[#e0386e] duration-100'>Mark your leave</button>
+                </div>
+                <div className=' text-center mt-3'>
+                  <h1 className='font-medium text-gray-500'>Plan ahead and mark your leave dates to prevent any appointments from being scheduled during your absence.</h1>
+                </div>
+              </div>
+              </div>
+
+            
+
+
+
+
             </div>
           </div>
+
+          <div className="mt-4 flex flex-col lg:flex-row items-center justify-center">
+            <hr className="border w-full mr-10 border-[#F1B814]" />
+          </div>
+
+
+
         </div>
-
-        <div className="mt-4 flex flex-col lg:flex-row items-center justify-center">
-          <hr className="border w-full mr-10 border-[#F1B814]" />
-        </div>
-
-        <div className="p-4 mt-4 flex flex-col gap-y-5 h-36">
-          <h1 className="text-xl md:text-2xl font-medium">Website Settings</h1>
-           <ul className='pl-20 flex gap-40'>
-            <li className='list-disc text-lg text-green-500'>
-              Live on Website
-            </li>
-
-            <li>
-              <button className='bg-gray-200 border px-4 py-1 text-[#490B3D] text-lg font-medium rounded-xl'>
-                GoLive
-              </button>
-            </li>
-           </ul>
-          
-        </div>
-
-        <div className="mt-4 flex items-center justify-center">
-          <hr className="border w-full mr-10 border-[#F1B814]" />
-        </div>
-
-
       </div>
     </div>
-    </div>
-    
+
   )
 }
 

@@ -46,14 +46,8 @@ function Doctor_Update_Profile() {
       })
       const str=response.data.message+" Changes will be reflected soon......"
       setMessage(str)
-      setErrorMessage('')
-      console.log("In Response");
-      
-      console.log(response);
-      
+      setErrorMessage('') 
     } catch (error) {
-      console.log(error);
-      console.log("In Error");
       setErrorMessage(error.response.data.message)
     }
     
@@ -67,7 +61,7 @@ function Doctor_Update_Profile() {
       <div>
         <Doctor_Header doctorInfo={doctorInfo} />
       </div>
-      <div className=' w-full px-16 py-5 flex flex-col gap-2 '>
+      +<div className=' w-full px-16 py-5 flex flex-col gap-2 '>
         <div>
           <h1 className='text-2xl font-medium underline text-[#490B3D]'>Personal Details</h1>
         </div>

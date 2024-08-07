@@ -6,6 +6,7 @@ function Doctor_Signin() {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [errorMessage, setErrorMessage] = useState("")
+    const [loading, setloading] = useState(false)
     const navigate = useNavigate()
 
     async function signin() {
@@ -13,16 +14,26 @@ function Doctor_Signin() {
             alert('Both the fields are required.')
             return;
         }
+        setloading(true)
         try {
             const response = await axios.post('https://doctor-appointment-ashy.vercel.app/api/v1/doctor/login', { email, password })
+            
+            if(response?.data?.statusCode===200){
             const doctorInfo=response.data.data.doctor
             localStorage.setItem('accessToken', response.data.data.accessToken)
             localStorage.setItem('refreshToken',response.data.data.refreshToken)
             navigate('/doctor/home',{state:doctorInfo})
+            setloading(false)
+            }
+               
         } catch (error) {
+            setloading(false)
            setErrorMessage(error.response.data.message) 
         }
     }
+
+
+
     return (
         <div className='flex flex-col items-center justify-center'>
             <header
@@ -82,7 +93,7 @@ function Doctor_Signin() {
                                 <button
                                     onClick={signin}
                                     className='px-2 h-7 rounded-full w-2/3 text-lg font-medium text-white bg-[#BD1E51] hover:bg-[#841538] duration-100'>
-                                    SignIn
+                                    {!loading?`Signin`:`loading.....`}
                                 </button>
                                 <p className='text-[#490B3D]'>Don't have a account? <Link to='/doctor/register' className='font-bold'>SignUp Now </Link></p>
                             </ul>

@@ -269,8 +269,7 @@ const listDoctorOnWebsite = asyncHandler(async (req, res) => {
             await LiveDoctor.create({
                 doctor: req.doctor._id
             })
-
-
+ 
         }
         await Doctor.findByIdAndUpdate(req.doctor._id, {
             $set: {

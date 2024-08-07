@@ -16,6 +16,13 @@ function Doctor_Home() {
   const [filePopup, setFilePopup] = useState(false)
   const [profilePicture, setProfilePicture] = useState(null)
   const [dp, setDp] = useState(doctorInfo.profilePicture)
+  const [schedule, setSchedule] = useState([-1, 2, 3, 4, 5, 6, -7])
+  const [schedulePopup,setSchedulePopup]=useState(false)
+  
+  useEffect(()=>{
+    console.log(schedule);
+  },[schedule])
+  
 
   async function changeProfilePicture() {
     if (!profilePicture) {
@@ -40,17 +47,25 @@ function Doctor_Home() {
       );
       setDp(response.data.data.profilePicture)
       setFilePopup(false)
-      doctorInfo.profilePicture=response.data.data.profilePicture
+      doctorInfo.profilePicture = response.data.data.profilePicture
       console.log("Dp");
     } catch (error) {
-      console.log("in Error");
       console.log(error);
 
-
-      // setErrorMessage(error.response.data.message) 
     }
-
   }
+
+  function changeSchedule(day){
+    setSchedule((prevSchedule) => {
+      const newSchedule = [...prevSchedule]; // create a new array
+      newSchedule[day] = newSchedule[day] * -1; // update the value
+      return newSchedule; // return the new array
+    });
+   
+    
+  }
+
+
 
   // const fetchDoctorInfo =async ()=> {
   //   try {
@@ -95,8 +110,8 @@ function Doctor_Home() {
                 alt="User Profile Picture"
               />
               <button
-              onClick={(e)=>(setFilePopup(!filePopup))} 
-              className="p-1 relative top-10 md:top-16 lg:top-[70px] -left-4 md:-left-6 lg:-left-10 border border-white bg-[#F1B814] rounded-full hover:bg-[#f7d56e] duration-500">
+                onClick={(e) => (setFilePopup(!filePopup))}
+                className="p-1 relative top-10 md:top-16 lg:top-[70px] -left-4 md:-left-6 lg:-left-10 border border-white bg-[#F1B814] rounded-full hover:bg-[#f7d56e] duration-500">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   height="28px"
@@ -145,16 +160,8 @@ function Doctor_Home() {
                 <Link
                   to='/doctor/update-profile'
                   state={doctorInfo}
-                  className="flex border p-1 px-3 rounded-lg bg-gray-200 hover:bg-gray-100 duration-200">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    height="24px"
-                    viewBox="0 -960 960 960"
-                    width="24px"
-                    fill="#000000"
-                  >
-                    <path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z" />
-                  </svg>
+                  className="flex items-center border px-2 py-1 border border-[#BD1E51] bg-[#BD1E51] font-medium text-white rounded-xl hover:bg-[#e0386e] duration-150">
+                  <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FFFFFF"><path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z" /></svg>
                   <p>Edit Profile</p>
                 </Link>
               </div>
@@ -195,33 +202,112 @@ function Doctor_Home() {
 
           <div className="mt-4 p-4">
             <h1 className="text-xl md:text-2xl font-medium">Weekly Schedule</h1>
-            <div className="px-3 py-2 mt-4 w-full lg:w-2/4 flex items-center justify-around">
-              <div className="p-2 md:p-3 rounded-md flex items-center justify-center bg-green-300 text-green-900">
-                <h1>MON</h1>
+            <div className='flex flex-col lg:flex-row  items-center justify-start'>
+              <div className="px-3 py-2 mt-4 w-full lg:w-2/4 grid grid-cols-3 lg:grid-cols-7 gap-4">
+                <div className={`w-14 h-14 text-lg flex items-center justify-center font-semibold rounded-lg text-white ${schedule[0] > 0 ? 'bg-green-400 hover:bg-green-500 duration-150' : ' bg-red-400 hover:bg-red-500 duration-150'}`}>
+                  <h1>MON</h1>
+                </div>
+                <div className={`w-14 h-14 text-lg flex items-center justify-center font-semibold rounded-lg text-white ${schedule[1] > 0 ? 'bg-green-400 hover:bg-green-500 duration-150' : ' bg-red-400 hover:bg-red-500 duration-150'}`}>
+                  <h1>TUE</h1>
+                </div>
+                <div className={`w-14 h-14 text-lg flex items-center justify-center font-semibold rounded-lg text-white ${schedule[2] > 0 ? 'bg-green-400 hover:bg-green-500 duration-150' : ' bg-red-400 hover:bg-red-500 duration-150'}`}>
+                  <h1>WED</h1>
+                </div>
+                <div className={`w-14 h-14 text-lg flex items-center justify-center font-semibold rounded-lg text-white ${schedule[3] > 0 ? 'bg-green-400 hover:bg-green-500 duration-150' : ' bg-red-400 hover:bg-red-500 duration-150'}`}>
+                  <h1>THUR</h1>
+                </div>
+                <div className={`w-14 h-14 text-lg flex items-center justify-center font-semibold rounded-lg text-white ${schedule[4] > 0 ? 'bg-green-400 hover:bg-green-500 duration-150' : ' bg-red-400 hover:bg-red-500 duration-150'}`}>
+                  <h1>FRI</h1>
+                </div>
+                <div className={`w-14 h-14 text-lg flex items-center justify-center font-semibold rounded-lg text-white ${schedule[5] > 0 ? 'bg-green-400 hover:bg-green-500 duration-150' : ' bg-red-400 hover:bg-red-500 duration-150'}`}>
+                  <h1>SAT</h1>
+                </div>
+                <div className='lg:hidden'> </div>
+                <div className={`w-14 h-14 text-lg flex items-center justify-center font-semibold rounded-lg text-white ${schedule[6] > 0 ? 'bg-green-400 hover:bg-green-500 duration-150' : ' bg-red-400 hover:bg-red-500 duration-150'}`}>
+                  <h1>SUN</h1>
+                </div>
               </div>
-              <div className="p-2 md:p-3 rounded-md flex items-center justify-center bg-green-300 text-green-900">
-                <h1>TUE</h1>
-              </div>
-              <div className="p-2 md:p-3 rounded-md flex items-center justify-center bg-green-300 text-green-900">
-                <h1>WED</h1>
-              </div>
-              <div className="p-2 md:p-3 rounded-md flex items-center justify-center bg-green-300 text-green-900">
-                <h1>THUR</h1>
-              </div>
-              <div className="p-2 md:p-3 rounded-md flex items-center justify-center bg-green-300 text-green-900">
-                <h1>FRI</h1>
-              </div>
-              <div className="p-2 md:p-3 rounded-md flex items-center justify-center bg-red-300 text-red-900">
-                <h1>SAT</h1>
-              </div>
-              <div className="p-2 md:p-3 rounded-md flex items-center justify-center bg-red-300 text-red-900">
-                <h1>SUN</h1>
+              <div>
+                <button 
+                onClick={()=>{setSchedulePopup(true)}}
+                className='flex gap-1 text-lg items-center border px-2 py-1 border-[#BD1E51] bg-[#BD1E51] font-medium text-white rounded-xl hover:bg-[#e0386e] duration-150'>
+                  <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FFFFFF"><path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z" /></svg>
+                  Change Schedule
+                </button>
               </div>
             </div>
           </div>
         </div>
       </div>
 
+
+
+
+      {
+        schedulePopup&&(
+          <div className="fixed top-0 left-0 w-full h-full bg-gray-900 bg-opacity-50 flex justify-center items-center">
+          <div className="border border-[#490B3D] max-h-max max-w-max bg-white rounded-xl shadow-2xl">
+            <div>
+              <div className='rounded-t-xl w-full flex items-center justify-end border bg-gray-200'>
+                <button 
+                onClick={()=>{setSchedulePopup(false)}}
+                className='bg-red-600 border border-red-600 hover:bg-red-700 rounded-tr-xl'>
+                  <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FFFFFF"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" /></svg>
+                </button>
+              </div>
+              <div className='mt-4 mx-4 grid grid-cols-3 gap-3 lg:grid-cols-7'>
+                <button
+                  className={`w-14 h-14 text-lg flex items-center justify-center font-semibold rounded-lg text-white ${schedule[0] > 0 ? 'bg-green-400 hover:bg-green-500 duration-150' : ' bg-red-400 hover:bg-red-500 duration-150'}`}
+                  onClick={(e)=>changeSchedule(0)}
+                >
+                  MON
+                </button>
+                <button 
+                 className={`w-14 h-14 text-lg flex items-center justify-center font-semibold rounded-lg text-white ${schedule[1] > 0 ? 'bg-green-400 hover:bg-green-500 duration-150' : ' bg-red-400 hover:bg-red-500 duration-150'}`}
+                  onClick={(e)=>changeSchedule(1)}
+                >
+                  TUE
+                </button>
+                <button  className={`w-14 h-14 text-lg flex items-center justify-center font-semibold rounded-lg text-white ${schedule[2] > 0 ? 'bg-green-400 hover:bg-green-500 duration-150' : ' bg-red-400 hover:bg-red-500 duration-150'}`}
+                  onClick={(e)=>changeSchedule(2)}
+                >
+                  WED
+                </button>
+                <button className={`w-14 h-14 text-lg flex items-center justify-center font-semibold rounded-lg text-white ${schedule[3] > 0 ? 'bg-green-400 hover:bg-green-500 duration-150' : ' bg-red-400 hover:bg-red-500 duration-150'}`}
+                  onClick={(e)=>changeSchedule(3)}
+                >
+                  THUR
+                </button>
+                <button  className={`w-14 h-14 text-lg flex items-center justify-center font-semibold rounded-lg text-white ${schedule[4] > 0 ? 'bg-green-400 hover:bg-green-500 duration-150' : ' bg-red-400 hover:bg-red-500 duration-150'}`}
+                    onClick={(e)=>changeSchedule(4)}
+                >
+                  FRI
+                </button>
+                <button  className={`w-14 h-14 text-lg flex items-center justify-center font-semibold rounded-lg text-white ${schedule[5] > 0 ? 'bg-green-400 hover:bg-green-500 duration-150' : ' bg-red-400 hover:bg-red-500 duration-150'}`}
+                  onClick={(e)=>changeSchedule(5)}
+                >
+                  SAT
+                </button>
+                <div className='lg:hidden'></div>
+                <button  className={`w-14 h-14 text-lg flex items-center justify-center font-semibold rounded-lg text-white ${schedule[6] > 0 ? 'bg-green-400 hover:bg-green-500 duration-150' : ' bg-red-400 hover:bg-red-500 duration-150'}`}
+                   onClick={(e)=>changeSchedule(6)}
+                >
+                  SUN
+                </button>
+              </div>
+              <div className='mt-5 pb-4 flex items-center justify-center'>
+                <button className='px-3 text-lg font-semibold text-white rounded-lg bg-[#BD1E51] hover:bg-[#e0386e]'>Save Changes</button>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+        )
+
+      }
+
+
+     
     </div>
 
 
