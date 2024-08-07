@@ -261,7 +261,7 @@ const listDoctorOnWebsite = asyncHandler(async (req, res) => {
 
     const { goLive } = req.body
 
-    if (goLive === 'true') {
+    if (goLive === true) {
         const doctor = await Doctor.findById(req.doctor._id)
 
         if (!(await LiveDoctor.findOne({ doctor: req.doctor._id }))) {
