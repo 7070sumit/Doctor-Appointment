@@ -37,6 +37,9 @@ const doctorSchema = new Schema(
             type: String,
             default:"None"
         },
+        ratings:{
+            type:Number
+        },
         clinicAddress: {
             street: { type: String},
             street: { type: String},
