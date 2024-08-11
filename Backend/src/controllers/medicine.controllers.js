@@ -5,14 +5,9 @@ import {Medicine} from '../models/medicine.model.js'
 
 
 const getAllMedicine=asyncHandler(async(req,res)=>{
-    console.log("In function");
     
     const medicine=await Medicine.find({}).limit(5)
     if (medicine){
-        console.log("In true");
-        console.log(medicine);
-        
-        
         return res
         .status(200)
         .json(
