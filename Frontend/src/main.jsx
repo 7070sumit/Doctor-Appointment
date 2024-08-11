@@ -5,8 +5,8 @@ import './index.css'
 import { Route, RouterProvider, createBrowserRouter, createRoutesFromElements } from 'react-router-dom'
 import Layout from './Layout.jsx'
 import {
-  //User Imports
-  User,
+
+  
   User_Signin,
   User_Signup,
 
@@ -14,12 +14,38 @@ import {
   
   Doctor_Signin,
   Doctor_Signup,
-  Doctor_Home,
   Doctor_Availability,
   Doctor_Mark_Leave,
   Doctor_Setting,
+  Doctor_Home,
   Doctor_Update_Profile,
   Doctor_Appointments,
+
+
+  //Home
+  Home,
+
+
+  //Appointment
+  Appointment,
+
+
+  //Lab Test
+  LabTest,
+
+
+
+  
+  //Buy Medicine
+  BuyMedicine,
+
+
+
+  //Video Consult
+  VideoConsult,
+
+
+
 
 } from './Components'
 
@@ -37,15 +63,42 @@ const router = createBrowserRouter(
     <Route path='update-profile' element={<Doctor_Update_Profile/>} />
     </Route>
     <Route path='/' element={<Layout />}>
+
+      {/* User Route */}
+
+
       <Route path='user'>
         <Route path='login' element={<User_Signin/>} />
         <Route path='register' element={<User_Signup/>} />
       </Route>
+
+
+      {/* Doctor Route */}
       <Route path='doctor'>
         <Route path='login' element={<Doctor_Signin/>} />
         <Route path='register' element={<Doctor_Signup/>} />
-        <Route path='home' element={<Doctor_Home/>} />
       </Route>
+
+
+      {/* Home Page */}
+      <Route path='home' element={<Home/>} />
+
+
+      {/* Appointment Route */}
+      <Route path='book-appointment' element={<Appointment/>} />
+
+
+      {/* Lab Test */}
+      <Route path='lab-test' element={<LabTest/>} />
+
+
+      {/* Buy Medicine */}
+      <Route path='buy-medicine' element={<BuyMedicine/>} />
+
+
+      {/* Video Consult */}
+      <Route path='video-consult' element={<VideoConsult/>} />
+
       </Route>
     </Route>
 

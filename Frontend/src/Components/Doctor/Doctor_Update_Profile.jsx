@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import Doctor_Header from './Doctor_Header'
 import { useLocation } from 'react-router-dom'
 import axios from 'axios'
@@ -7,7 +7,7 @@ function Doctor_Update_Profile() {
 
   const location = useLocation();
   const doctorInfo = location.state
-  let count=0
+  let count = 0
   const [lastName, setLastName] = useState(doctorInfo.lastName)
   const [specialization, setSpecialization] = useState(doctorInfo.specialization)
   const [experience, setExperience] = useState(doctorInfo.experience)
@@ -19,58 +19,58 @@ function Doctor_Update_Profile() {
   const [fullAddress, setFullAddress] = useState(doctorInfo.clinicAddress.fullAddress)
   const [clinicPhone, setClinicPhone] = useState(doctorInfo.clinicAddress.clinicPhone)
   const [pincode, setPincode] = useState(doctorInfo.clinicAddress.pincode)
-  const [errorMessage,setErrorMessage]=useState('')
-  const[message,setMessage]=useState('')
-  const[change,setChange]=useState(false)
-  
+  const [errorMessage, setErrorMessage] = useState('')
+  const [message, setMessage] = useState('')
+  const [change, setChange] = useState(false)
 
- 
-  async function updateProfile(){
-    
+
+
+  async function updateProfile() {
+
     console.log(change);
-    
 
-    if(!change){
+
+    if (!change) {
       setErrorMessage('No changes detected.')
       setMessage('')
       return
     }
     try {
       const accessToken = localStorage.getItem('accessToken');
-      const response=await axios.patch('https://doctor-appointment-ashy.vercel.app/api/v1/doctor/update-profile',{specialization,experience,degree,street,city,fullAddress,state,pincode,clinicPhone,appointmentFee},
+      const response = await axios.patch('https://doctor-appointment-ashy.vercel.app/api/v1/doctor/update-profile', { specialization, experience, degree, street, city, fullAddress, state, pincode, clinicPhone, appointmentFee },
         {
           withCredentials: true,
           headers: {
-              Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${accessToken}`,
           },
-      })
-      const str=response.data.message+" Changes will be reflected soon......"
+        })
+      const str = response.data.message + " Changes will be reflected soon......"
       setMessage(str)
-      setErrorMessage('') 
+      setErrorMessage('')
     } catch (error) {
       setErrorMessage(error.response.data.message)
     }
-    
-    
 
-      
+
+
+
   }
 
   return (
-    <div className='flex'>
+    <div className='flex flex-col lg:flex-row'>
       <div>
         <Doctor_Header doctorInfo={doctorInfo} />
       </div>
-      +<div className=' w-full px-16 py-5 flex flex-col gap-2 '>
+      <div className=' w-full px-16 py-5 flex flex-col gap-2 '>
         <div>
           <h1 className='text-2xl font-medium underline text-[#490B3D]'>Personal Details</h1>
         </div>
 
-        <div className='mt-5 px-26 grid grid-cols-3 gap-y-3'>
+        <div className='mt-5 px-26 grid grid-cols-1 md:grid-cols-2  lg:grid-cols-3 gap-y-3 gap-x-20'>
           <div className='flex flex-col items-start'>
             <label className='text-base font font-medium text-[#490B3D]'>Firstname</label>
             <input
-              className='mt-[1px] py-1 px-4 w-1/2 rounded-md text-[#F1B814] border text-lg font-medium outline-0 border-[#F1BB14] focus-within:border-[#F1BB14] focus-within:border-b-2 hover:cursor-not-allowed'
+              className='mt-[1px] py-1 px-4 w-full rounded-md text-[#F1B814] border text-lg font-medium outline-0 border-[#F1BB14] focus-within:border-[#F1BB14] focus-within:border-b-2 hover:cursor-not-allowed'
               type={doctorInfo.firstName}
               disabled
               value="Sumit"
@@ -79,17 +79,17 @@ function Doctor_Update_Profile() {
           <div className='flex flex-col items-start'>
             <label className='text-base font font-medium text-[#490B3D]'>Lastname</label>
             <input
-              className='mt-[1px] py-1 px-4 w-1/2 rounded-md text-[#F1B814] border text-lg font-medium outline-0 border-[#F1BB14] focus-within:border-[#F1BB14] focus-within:border-b-2'
+              className='mt-[1px] py-1 px-4 w-full rounded-md text-[#F1B814] border text-lg font-medium outline-0 border-[#F1BB14] focus-within:border-[#F1BB14] focus-within:border-b-2'
               type="text"
               value={lastName}
               onChange={(e) => (
-                setLastName(e.target.value),setChange(true))}
+                setLastName(e.target.value), setChange(true))}
             />
           </div>
           <div className='flex flex-col items-start'>
             <label className='text-base font font-medium text-[#490B3D]'>Email</label>
             <input
-              className='mt-[1px] py-1 px-4 w-1/2 rounded-md text-[#F1B814] border text-lg font-medium outline-0 border-[#F1BB14] focus-within:border-[#F1BB14] focus-within:border-b-2 hover:cursor-not-allowed'
+              className='mt-[1px] py-1 px-4 w-full rounded-md text-[#F1B814] border text-lg font-medium outline-0 border-[#F1BB14] focus-within:border-[#F1BB14] focus-within:border-b-2 hover:cursor-not-allowed'
               type="text"
               disabled
               value={doctorInfo.email}
@@ -98,7 +98,7 @@ function Doctor_Update_Profile() {
           <div className='flex flex-col items-start'>
             <label className='text-base font font-medium text-[#490B3D]'>Phone</label>
             <input
-              className='mt-[1px] py-1 px-4 w-1/2 rounded-md text-[#F1B814] border text-lg font-medium outline-0 border-[#F1BB14] focus-within:border-[#F1BB14] focus-within:border-b-2 hover:cursor-not-allowed'
+              className='mt-[1px] py-1 px-4 w-full rounded-md text-[#F1B814] border text-lg font-medium outline-0 border-[#F1BB14] focus-within:border-[#F1BB14] focus-within:border-b-2 hover:cursor-not-allowed'
               type="Number"
               disabled
               value={doctorInfo.phone}
@@ -109,8 +109,8 @@ function Doctor_Update_Profile() {
             <select
               name="Specialization"
               value={specialization}
-              onChange={(e) => { setSpecialization(e.target.value),setChange(true) }}
-              className='mt-[1px] py-1 px-4 w-1/2 rounded-md text-[#F1B814] border text-lg font-medium outline-0 border-[#F1BB14] focus-within:border-[#F1BB14] focus-within:border-b-2'
+              onChange={(e) => { setSpecialization(e.target.value), setChange(true) }}
+              className='mt-[1px] py-1 px-4 w-full rounded-md text-[#F1B814] border text-lg font-medium outline-0 border-[#F1BB14] focus-within:border-[#F1BB14] focus-within:border-b-2'
             >
               <option value="None">{doctorInfo.specialization}</option>
               <option value="0-1 year">Others</option>
@@ -125,14 +125,14 @@ function Doctor_Update_Profile() {
               <option value="7 Years Above">Endocrinologist</option>
               <option value="7 Years Above">Hematologist</option>
             </select>
-          </div>
+          </div> 
           <div className='flex flex-col items-start '>
             <label className='text-base font font-medium text-[#490B3D]'>Experience</label>
             <select
               value={experience}
-              onChange={(e) => { setExperience(e.target.value),setChange(true) }}
+              onChange={(e) => { setExperience(e.target.value), setChange(true) }}
               name="Experience"
-              className='mt-[1px] py-1 px-4 w-1/2 rounded-md text-[#F1B814] border text-lg font-medium outline-0 border-[#F1BB14] focus-within:border-[#F1BB14] focus-within:border-b-2'
+              className='mt-[1px] py-1 px-4 w-full rounded-md text-[#F1B814] border text-lg font-medium outline-0 border-[#F1BB14] focus-within:border-[#F1BB14] focus-within:border-b-2'
             >
               <option value="None">{doctorInfo.experience}</option>
               <option className='hover:bg-red-300' value="0-1 year">Below 1 Year</option>
@@ -145,13 +145,13 @@ function Doctor_Update_Profile() {
             <label className='text-base font font-medium text-[#490B3D]'>Degree</label>
             <select
               value={degree}
-              onChange={(e) => { setDegree(e.target.value),setChange(true) }}
+              onChange={(e) => { setDegree(e.target.value), setChange(true) }}
               name="Degree"
-              className='mt-[1px] py-1 px-4 w-1/2 rounded-md text-[#F1B814] border text-lg font-medium outline-0 border-[#F1BB14] focus-within:border-[#F1BB14] focus-within:border-b-2'
+              className='mt-[1px] py-1 px-4 w-full rounded-md text-[#F1B814] border text-lg font-medium outline-0 border-[#F1BB14] focus-within:border-[#F1BB14] focus-within:border-b-2'
             >
               <option value="None">{doctorInfo.degree}</option>
               <option value="Doctor of Medicine (MD)">Doctor of Medicine (MD)</option>
-              <option value="Bachelor of Medicine, Bachelor of Surgery (MBBS/MBChB)">Bachelor of Medicine, Bachelor of Surgery (MBBS/MBChB)</option>
+              <option value="Bachelor of Medicine, Bachelor of Surgery (MBBS/MBChB)">Bachelor of Surgery (MBBS/MBChB)</option>
               <option value="Doctor of Pharmacy (PharmD)">Doctor of Pharmacy (PharmD)</option>
               <option value="Doctor of Physical Therapy (DPT)">Doctor of Physical Therapy (DPT)</option>
               <option value="Doctor of Dental Medicine (DMD)">Doctor of Dental Medicine (DMD)</option>
@@ -163,10 +163,10 @@ function Doctor_Update_Profile() {
           <div className='flex flex-col items-start'>
             <label className='text-base font font-medium text-[#490B3D]'>Appointment Fee</label>
             <input
-              className='mt-[1px] py-1 px-4 w-1/2 rounded-md text-[#F1B814] border text-lg font-medium outline-0 border-[#F1BB14] focus-within:border-[#F1BB14] focus-within:border-b-2'
+              className='mt-[1px] py-1 px-4 w-full rounded-md text-[#F1B814] border text-lg font-medium outline-0 border-[#F1BB14] focus-within:border-[#F1BB14] focus-within:border-b-2'
               type='Number'
               value={appointmentFee}
-              onChange={(e) => { setAppointmentFee(e.target.value),setChange(true) }}
+              onChange={(e) => { setAppointmentFee(e.target.value), setChange(true) }}
             />
           </div>
 
@@ -182,61 +182,64 @@ function Doctor_Update_Profile() {
           <h1 className='text-2xl font-medium underline text-[#490B3D]'>Clinic Address</h1>
         </div>
 
-        <div className='mt-5 px-26 grid grid-cols-4 gap-y-3'>
+        <div className='mt-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 gap-x-20'>
           <div className='flex flex-col items-start'>
-            <label className='text-base font font-medium text-[#490B3D]'>Street</label>
+            <label className='text-base font-medium text-[#490B3D]'>Street</label>
             <input
-              className='mt-[1px] py-1 px-4 w-1/2 rounded-md text-[#F1B814] border text-lg font-medium outline-0 border-[#F1BB14] focus-within:border-[#F1BB14] focus-within:border-b-2'
+              className='mt-[1px] py-1 px-4 w-full rounded-md text-[#F1B814] border text-lg font-medium outline-0 border-[#F1BB14] focus-within:border-[#F1BB14] focus-within:border-b-2'
               type="text"
-              onChange={(e)=>(setStreet(e.target.value),setChange(true))}
+              onChange={(e) => (setStreet(e.target.value), setChange(true))}
               value={doctorInfo.clinicAddress.street}
             />
           </div>
 
           <div className='flex flex-col items-start'>
-            <label className='text-base font font-medium text-[#490B3D]'>City</label>
+            <label className='text-base font-medium text-[#490B3D]'>City</label>
             <input
-              className='mt-[1px] py-1 px-4 w-1/2 rounded-md text-[#F1B814] border text-lg font-medium outline-0 border-[#F1BB14] focus-within:border-[#F1BB14] focus-within:border-b-2'
+              className='mt-[1px] py-1 px-4 w-full rounded-md text-[#F1B814] border text-lg font-medium outline-0 border-[#F1BB14] focus-within:border-[#F1BB14] focus-within:border-b-2'
               type="text"
               value={city}
-              onChange={(e) => (setCity(e.target.value),setChange(true))}
+              onChange={(e) => (setCity(e.target.value), setChange(true))}
             />
           </div>
 
           <div className='flex flex-col items-start'>
-            <label className='text-base font font-medium text-[#490B3D]'>Clinic Contact Number</label>
+            <label className='text-base font-medium text-[#490B3D]'>Clinic Contact Number</label>
             <input
-              className='mt-[1px] py-1 px-4 w-1/2 rounded-md text-[#F1B814] border text-lg font-medium outline-0 border-[#F1BB14] focus-within:border-[#F1BB14] focus-within:border-b-2'
-              type="Number"
+              className='mt-[1px] py-1 px-4 w-full rounded-md text-[#F1B814] border text-lg font-medium outline-0 border-[#F1BB14] focus-within:border-[#F1BB14] focus-within:border-b-2'
+              type="number"
               value={clinicPhone}
-              onChange={(e) => { setClinicPhone(e.target.value),setChange(true) }}
+              onChange={(e) => { setClinicPhone(e.target.value), setChange(true) }}
             />
           </div>
+
           <div className='flex flex-col items-start'>
-            <label className='text-base font font-medium text-[#490B3D]'>Pincode</label>
+            <label className='text-base font-medium text-[#490B3D]'>Pincode</label>
             <input
-              className='mt-[1px] py-1 px-4 w-1/2 rounded-md text-[#F1B814] border text-lg font-medium outline-0 border-[#F1BB14] focus-within:border-[#F1BB14] focus-within:border-b-2'
-              type="Number"
+              className='mt-[1px] py-1 px-4 w-full rounded-md text-[#F1B814] border text-lg font-medium outline-0 border-[#F1BB14] focus-within:border-[#F1BB14] focus-within:border-b-2'
+              type="number"
               value={pincode}
-              onChange={(e) => { setPincode(e.target.value),setChange(true) }}
+              onChange={(e) => { setPincode(e.target.value), setChange(true) }}
             />
           </div>
-          <div className='flex flex-col items-start col-span-2'>
-            <label className='text-base font font-medium text-[#490B3D]'>Full Address</label>
+
+          <div className='flex flex-col items-start'>
+            <label className='text-base font-medium text-[#490B3D]'>Full Address</label>
             <input
-              className='mt-[1px] py-1 px-4 w-3/4 rounded-md text-[#F1B814] border text-lg font-medium outline-0 border-[#F1BB14] focus-within:border-[#F1BB14] focus-within:border-b-2'
+              className='mt-[1px] py-1 px-4 w-full rounded-md text-[#F1B814] border text-lg font-medium outline-0 border-[#F1BB14] focus-within:border-[#F1BB14] focus-within:border-b-2'
               type="text"
               value={fullAddress}
-              onChange={(e) => (setFullAddress(e.target.value),setChange(true))}
+              onChange={(e) => (setFullAddress(e.target.value), setChange(true))}
             />
           </div>
+
           <div className='flex flex-col items-start'>
-            <label className='text-base font font-medium text-[#490B3D]'>State</label>
+            <label className='text-base font-medium text-[#490B3D]'>State</label>
             <select
               value={state}
-              onChange={(e) => { setState(e.target.value),setChange(true) }}
+              onChange={(e) => { setState(e.target.value), setChange(true) }}
               name="Degree"
-              className='mt-[1px] py-1 px-4 w-1/2 rounded-md text-[#F1B814] border text-lg font-medium outline-0 border-[#F1BB14] focus-within:border-[#F1BB14] focus-within:border-b-2'
+              className='mt-[1px] py-1 px-4 w-full rounded-md text-[#F1B814] border text-lg font-medium outline-0 border-[#F1BB14] focus-within:border-[#F1BB14] focus-within:border-b-2'
             >
               <option value="Andhra Pradesh">Andhra Pradesh</option>
               <option value="Arunachal Pradesh">Arunachal Pradesh</option>
@@ -276,15 +279,17 @@ function Doctor_Update_Profile() {
               <option value="Jammu and Kashmir">Jammu and Kashmir</option>
             </select>
           </div>
-
         </div>
+
+
+
 
         <h1 className='text-red-500'>{errorMessage}</h1>
         <h1 className='text-green-600 text-lg font-medium' >{message}</h1>
 
         <div>
           <button
-          onClick={updateProfile}
+            onClick={updateProfile}
             className='bg-[#BD1E51] px-4 py-2 text-lg font-medium text-white rounded-lg hover:bg-[#e0386e] duration-100'
           >Save Changes</button>
         </div>

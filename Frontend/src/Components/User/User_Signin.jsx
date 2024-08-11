@@ -4,24 +4,22 @@ import { NavLink, Link } from 'react-router-dom'
 function User_Signin() {
     return (
         <div className='flex flex-col items-center justify-center'>
-            <header
-                className='z-[1] w-full h-10  flex items-center justify-center gap-x-10 text-xl font-medium shadow-xl'
+          <header
+                className='z-[1] w-full h-10 flex items-center justify-center gap-x-10 text-xl font-semibold shadow-2xl bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600'
             >
                 <NavLink
                     to='/user/login'
                     className={({ isActive }) =>
-                        `${isActive ? "text-[#F1B814]" : ""} hover:text-[#F1B814] duration-100`
+                        `${isActive ? "bg-white text-yellow-600 shadow-md" : "text-white"} px-4 py-2 h-[80%] hover:bg-yellow-700 hover:text-white duration-500 transform hover:scale-105 transition-all flex items-center justify-center rounded-lg`
                     }
-
-                // className='hover:text-[#F1B814] duration-100'
                 >
                     User
                 </NavLink>
                 <NavLink
-                    className={({ isActive }) =>
-                        `${isActive ? "text-[#F1B814]" : ""} hover:text-[#F1B814] duration-100`
-                    }
                     to='/doctor/login'
+                    className={({ isActive }) =>
+                        `${isActive ? "bg-white text-yellow-600 shadow-md" : "text-white"} px-4 py-2 h-[80%] hover:bg-yellow-700 hover:text-white duration-500 transform hover:scale-105 transition-all flex items-center justify-center rounded-lg`
+                    }
                 >
                     Doctor
                 </NavLink>

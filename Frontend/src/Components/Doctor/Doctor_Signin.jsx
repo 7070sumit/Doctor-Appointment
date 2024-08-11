@@ -17,18 +17,19 @@ function Doctor_Signin() {
         setloading(true)
         try {
             const response = await axios.post('https://doctor-appointment-ashy.vercel.app/api/v1/doctor/login', { email, password })
-            
-            if(response?.data?.statusCode===200){
-            const doctorInfo=response.data.data.doctor
-            localStorage.setItem('accessToken', response.data.data.accessToken)
-            localStorage.setItem('refreshToken',response.data.data.refreshToken)
-            navigate('/doctor/home',{state:doctorInfo})
-            setloading(false)
+
+            if (response?.data?.statusCode === 200) {
+                const doctorInfo = response.data.data.doctor
+                localStorage.setItem('accessToken', response.data.data.accessToken)
+                localStorage.setItem('refreshToken', response.data.data.refreshToken)
+                navigate('/doctor/home', { state: doctorInfo })
+                setloading(false)
             }
-               
+
         } catch (error) {
+            setErrorMessage(error.response.data.message)
             setloading(false)
-           setErrorMessage(error.response.data.message) 
+
         }
     }
 
@@ -37,21 +38,21 @@ function Doctor_Signin() {
     return (
         <div className='flex flex-col items-center justify-center'>
             <header
-                className='z-[1] w-full h-10  flex items-center justify-center gap-x-10 text-xl font-medium shadow-xl'
+                className='z-[1] w-full h-10 flex items-center justify-center gap-x-10 text-xl font-semibold shadow-2xl bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600'
             >
                 <NavLink
                     to='/user/login'
                     className={({ isActive }) =>
-                        `${isActive ? "text-[#F1B814]" : ""} hover:text-[#F1B814] duration-100`
+                        `${isActive ? "bg-white text-yellow-600 shadow-md" : "text-white"} px-4 py-2 h-[80%] hover:bg-yellow-700 hover:text-white duration-500 transform hover:scale-105 transition-all flex items-center justify-center rounded-lg`
                     }
                 >
                     User
                 </NavLink>
                 <NavLink
-                    className={({ isActive }) =>
-                        `${isActive ? "text-[#F1B814]" : ""} hover:text-[#F1B814] duration-100`
-                    }
                     to='/doctor/login'
+                    className={({ isActive }) =>
+                        `${isActive ? "bg-white text-yellow-600 shadow-md" : "text-white"} px-4 py-2 h-[80%] hover:bg-yellow-700 hover:text-white duration-500 transform hover:scale-105 transition-all flex items-center justify-center rounded-lg`
+                    }
                 >
                     Doctor
                 </NavLink>
@@ -93,7 +94,7 @@ function Doctor_Signin() {
                                 <button
                                     onClick={signin}
                                     className='px-2 h-7 rounded-full w-2/3 text-lg font-medium text-white bg-[#BD1E51] hover:bg-[#841538] duration-100'>
-                                    {!loading?`Signin`:`loading.....`}
+                                    {!loading ? `Signin` : `loading.....`}
                                 </button>
                                 <p className='text-[#490B3D]'>Don't have a account? <Link to='/doctor/register' className='font-bold'>SignUp Now </Link></p>
                             </ul>

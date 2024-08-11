@@ -2,32 +2,19 @@ import React, { useState } from 'react'
 import Doctor_Header from './Doctor_Header'
 import { useLocation, Link } from 'react-router-dom'
 import axios from 'axios';
+import LoadingButton from '../Constants/LoadingButton'
+
+
+
+
 
 
 function Doctor_Setting() {
   const location = useLocation();
-  const doctorInfo = location.state
-  // const [goLive, setGoLive] = useState(doctorInfo.liveOnWebsite)
+  let doctorInfo = location.state
   const [showGoLive,setShowGoLive]=useState(doctorInfo.liveOnWebsite)
+  const [loading, setloading] = useState(false)
 
-
-  async function doctorLive(goLive){
-    try {
-      const accessToken = localStorage.getItem('accessToken');
-      const response = await axios.patch('https://doctor-appointment-ashy.vercel.app/api/v1/doctor/go-live',{goLive},
-        {
-          withCredentials: true,
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        })
-        console.log(response);
-        
-    } catch (error) {
-      console.log(error);
-      
-    }
-  }
 
 
   return (
@@ -89,55 +76,6 @@ function Doctor_Setting() {
               </div>
               </div>
 
-
-              {
-                showGoLive ? (
-                  <div className='flex items-center justify-center'>
-                     <div className='p-2 rounded-lg border bg-green-100 border-green-500 w-[50%]'>
-                    <div className='flex items-center justify-between'>
-                      <li className='text-lg font-medium underline text-green-500'>Live Status</li>
-                      <button
-                      onClick={()=>{doctorLive(false)}}
-                      className='px-2 rounded-lg bg-red-500 text-white font-medium hover:bg-red-600 duration-100'
-                      >
-                        Go Offline
-                      </button>
-                    </div>
-                    <div className=' text-center mt-3'>
-                      <h1 className='font-medium text-gray-500'>You are currently live on the website, and patients can now book appointments with you directly through the platform.</h1>
-                    </div>
-                  </div>
-
-                  </div>
-
-
-                 
-
-                ) : (
-                  <div className='flex items-center justify-center'>
-                     <div className='p-2 rounded-lg border bg-red-100 border-red-400 w-[50%]'>
-                    <div className='flex items-center justify-between'>
-                      <li className='text-lg font-medium underline text-red-600'>Live Status</li>
-                      <button
-                      onClick={()=>{doctorLive(true)}} 
-                      className='px-2 rounded-lg bg-green-500 text-white font-medium hover:bg-green-600 duration-100'
-                      >
-                        Go Online
-                      </button>
-                    </div>
-                    <div className=' text-center mt-3'>
-                      <h1 className='font-medium text-gray-500'>You are currently live on the website, and patients can now book appointments with you directly through the platform.</h1>
-                    </div>
-                  </div>
-
-                  </div>
-
-
-
-                 
-
-                )
-              }
 
               <div className='flex items-center justify-center'>
 
