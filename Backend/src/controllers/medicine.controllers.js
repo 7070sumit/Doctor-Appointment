@@ -5,9 +5,23 @@ import {Medicine} from '../models/medicine.model.js'
 
 
 const getAllMedicine=asyncHandler(async(req,res)=>{
-    const medicine=await Medicine.find({medicine_id:"MED1017"})
+    console.log("In function");
+    
+    const medicine=await Medicine.find({}).limit(5)
     if (medicine){
-        new ApiResponse(200,medicine,"Medicine information fetched successfully from the DB.")
+        console.log("In true");
+        console.log(medicine);
+        
+        
+        return res
+        .status(200)
+        .json(
+            new ApiResponse(
+                200,
+                medicine,
+                "Medicine fetched successfully"
+            )
+        )
     }else{
         throw new ApiError(500,{},"Could not fetch medicine information.")
     }
