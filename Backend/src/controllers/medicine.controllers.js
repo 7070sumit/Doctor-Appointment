@@ -5,7 +5,7 @@ import {Medicine} from '../models/medicine.model.js'
 
 
 const getAllMedicine=asyncHandler(async(req,res)=>{
-    const medicine=await Medicine.find({}).limit(1)
+    const medicine=await Medicine.find({medicine_id:"MED1017"})
     if (medicine){
         new ApiResponse(200,medicine,"Medicine information fetched successfully from the DB.")
     }else{
