@@ -8,7 +8,7 @@ const router=Router()
 
 
 router.route('/register').post(upload.none(),registerUser)
-router.route('/login').post(upload.none(), loginUser)
+router.route('/login').get(upload.none(), loginUser)
 router.route('/doctors-live').get( getDoctorsLive)
 
 
