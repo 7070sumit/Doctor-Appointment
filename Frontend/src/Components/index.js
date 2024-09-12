@@ -38,6 +38,7 @@ import LabTest from "./LabTest/LabTest";
 //Buy Medicine
 
 import BuyMedicine from "./BuyMedicine/BuyMedicine";
+import ViewMedicineDetails from "./BuyMedicine/ViewMedicine";
 
 //Video Consult 
 
@@ -84,6 +85,8 @@ export {
     
     //Buy Medicine
     BuyMedicine,
+    ViewMedicineDetails,
+
 
 
 

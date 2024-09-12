@@ -1,10 +1,40 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { NavLink, Link } from 'react-router-dom'
+import axios from 'axios'
+import LoadingButton from '../Constants/LoadingButton'
+
 
 function User_Signin() {
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const [loading, setLoading] = useState(false)
+    const [errorMessage, setErrorMessage] = useState('')
+
+
+    async function login() {
+
+        if (!email || !password) {
+            return alert('Both the fields are required.')
+        }
+
+        try {
+            setLoading(true)
+            const response = await axios.post('https://doctor-appointment-ashy.vercel.app/api/v1/user/login', { email, password })
+            if (response?.status === 200) {
+                setLoading(false)
+                const userInfo = response.data.data.user
+                localStorage.setItem('accessToken', response.data.data.accessToken)
+                localStorage.setItem('refreshToken', response.data.data.refreshToken)
+            }
+        } catch (error) {
+            setErrorMessage(error.response.data.message)
+            setLoading(false)
+        }
+    }
+
     return (
         <div className='flex flex-col items-center justify-center'>
-          <header
+            <header
                 className='z-[1] w-full h-10 flex items-center justify-center gap-x-10 text-xl font-semibold shadow-2xl bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600'
             >
                 <NavLink
@@ -36,8 +66,8 @@ function User_Signin() {
                     >
                         <div className='mb-0 mt-20'>
                             <Link
-                            to='/user/register'
-                            className='ml-40 px-5 py-1 mb-0 text-lg font-medium rounded-lg border border-white bg-transparent text-white hover:border-[#F1B814] hover:text-[#F1B814] duration-300'>
+                                to='/user/register'
+                                className='ml-40 px-5 py-1 mb-0 text-lg font-medium rounded-lg border border-white bg-transparent text-white hover:border-[#F1B814] hover:text-[#F1B814] duration-300'>
                                 SignUp
                             </Link>
                         </div>
@@ -57,6 +87,7 @@ function User_Signin() {
                                 <li className='p-2 w-2/3 relative flex  border-[1px] rounded-full  border-gray-300 focus-within:border-[#F1BB14] focus-within:border-b-2 hover:border-[#F1BB14]'>
                                     <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#B7B7B7"><path d="M160-160q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h640q33 0 56.5 23.5T880-720v480q0 33-23.5 56.5T800-160H160Zm320-280L160-640v400h640v-400L480-440Zm0-80 320-200H160l320 200ZM160-640v-80 480-400Z" /></svg>
                                     <input
+                                        onChange={(e) => { setEmail(e.target.value) }}
                                         className='outline-0 ml-3 w-full'
                                         placeholder='Email'
                                         type="text" />
@@ -64,13 +95,23 @@ function User_Signin() {
                                 <li className='p-2 w-2/3 relative flex  border-[1px] rounded-full border-gray-300 focus-within:border-[#F1BB14] focus-within:border-b-2 hover:border-[#F1BB14]'>
                                     <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#B7B7B7"><path d="M80-200v-80h800v80H80Zm46-242-52-30 34-60H40v-60h68l-34-58 52-30 34 58 34-58 52 30-34 58h68v60h-68l34 60-52 30-34-60-34 60Zm320 0-52-30 34-60h-68v-60h68l-34-58 52-30 34 58 34-58 52 30-34 58h68v60h-68l34 60-52 30-34-60-34 60Zm320 0-52-30 34-60h-68v-60h68l-34-58 52-30 34 58 34-58 52 30-34 58h68v60h-68l34 60-52 30-34-60-34 60Z" /></svg>
                                     <input
+                                        onChange={(e) => { setPassword(e.target.value) }}
                                         className='outline-0 ml-3 w-full'
                                         placeholder='Password'
                                         type="password" />
                                 </li>
+                                <li className='text-red-500'>{errorMessage}</li>
 
-                                <button className='px-2 h-7 rounded-full w-2/3 text-lg font-medium text-white bg-[#BD1E51] hover:bg-[#841538] duration-100'>
-                                    SignIn
+                                <button
+                                    onClick={login}
+                                    className='px-2 h-7 rounded-full flex items-center justify-center w-2/3 text-lg font-medium text-white bg-[#BD1E51] hover:bg-[#841538] duration-100'>
+                                    {
+                                        loading ? (
+                                            <LoadingButton />
+                                        ) : (
+                                            <p>SIGN UP</p>
+                                        )
+                                    }
                                 </button>
                                 <p className='text-[#490B3D]'>Don't have a account? <Link to='/user/register' className='font-bold'>SignUp Now </Link></p>
                             </ul>

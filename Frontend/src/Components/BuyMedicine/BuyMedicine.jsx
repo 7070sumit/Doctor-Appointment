@@ -1,93 +1,48 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
+import LoadingScreen from '../Constants/LoadingScreen.jsx';
+import { useDispatch } from 'react-redux';
+import { addToCart } from '../../Features/cartSlice.js';
 
 function BuyMedicine() {
+  const [medicine, setMedicine] = useState([]);
+  const [loading,setLoading]=useState(false)
+  const dispatch = useDispatch();
 
-  const medicine = [
-    {
-      "id": 1,
-      "name": "Paracetamol",
-      "use_cases": ["Fever", "Headache"],
-      "price": 5.99,
-      "product_link": "https://5.imimg.com/data5/SELLER/Default/2021/6/AC/ZD/LY/122822982/85513-1-1000-500x500.jpg"
-    },
-    {
-      "id": 2,
-      "name": "Ibuprofen",
-      "use_cases": ["Pain Relief", "Inflammation"],
-      "price": 7.49,
-      "product_link": "https://5.imimg.com/data5/SELLER/Default/2021/6/AC/ZD/LY/122822982/85513-1-1000-500x500.jpg"
-    },
-    {
-      "id": 3,
-      "name": "Amoxicillin",
-      "use_cases": ["Bacterial Infections", "Antibiotic"],
-      "price": 12.99,
-      "product_link": "https://5.imimg.com/data5/SELLER/Default/2021/6/AC/ZD/LY/122822982/85513-1-1000-500x500.jpg"
-    },
-    {
-      "id": 4,
-      "name": "Cough Syrup",
-      "use_cases": ["Cough", "Sore Throat"],
-      "price": 8.99,
-      "product_link": "https://5.imimg.com/data5/SELLER/Default/2021/6/AC/ZD/LY/122822982/85513-1-1000-500x500.jpg"
-    },
-    {
-      "id": 5,
-      "name": "Loratadine",
-      "use_cases": ["Allergies", "Hay Fever"],
-      "price": 6.29,
-      "product_link": "https://5.imimg.com/data5/SELLER/Default/2021/6/AC/ZD/LY/122822982/85513-1-1000-500x500.jpg"
-    },
-    {
-      "id": 6,
-      "name": "Metformin",
-      "use_cases": ["Diabetes", "Blood Sugar Control"],
-      "price": 9.79,
-      "product_link": "https://5.imimg.com/data5/SELLER/Default/2021/6/AC/ZD/LY/122822982/85513-1-1000-500x500.jpg"
-    },
-    {
-      "id": 7,
-      "name": "Cetirizine",
-      "use_cases": ["Allergy Symptoms", "Sneezing"],
-      "price": 7.89,
-      "product_link": "https://5.imimg.com/data5/SELLER/Default/2021/6/AC/ZD/LY/122822982/85513-1-1000-500x500.jpg"
-    },
-    {
-      "id": 8,
-      "name": "Omeprazole",
-      "use_cases": ["Acid Reflux", "Heartburn"],
-      "price": 11.49,
-      "product_link": "https://5.imimg.com/data5/SELLER/Default/2021/6/AC/ZD/LY/122822982/85513-1-1000-500x500.jpg"
-    },
-    {
-      "id": 9,
-      "name": "Aspirin",
-      "use_cases": ["Pain Relief", "Anti-inflammatory"],
-      "price": 5.29,
-      "product_link": "https://5.imimg.com/data5/SELLER/Default/2021/6/AC/ZD/LY/122822982/85513-1-1000-500x500.jpg"
-    },
-    {
-      "id": 10,
-      "name": "Diphenhydramine",
-      "use_cases": ["Allergy Relief", "Insomnia"],
-      "price": 6.99,
-      "product_link": "https://5.imimg.com/data5/SELLER/Default/2021/6/AC/ZD/LY/122822982/85513-1-1000-500x500.jpg"
+  useEffect(() => {
+    setLoading(true)
+    getMedicine(1);
+  }, []);
+
+
+  async function getMedicine(page) {
+    setLoading(true)
+    try {
+      const response = await axios.get(`https://doctor-appointment-ashy.vercel.app/api/v1/medicine/get-all-medicine?page=${page}`);
+      if (response.status === 200) {
+        setMedicine([...response.data.data]);
+      }
+    } catch (error) {
+      console.log(error);
+    } finally{
+      setLoading(false)
     }
-  ]
+  }
 
-
-
-
+  function addToCartButton(product){
+    console.log("Add to cart clicked");
+    dispatch(addToCart(product));
+  }
 
   return (
-    <div className='p-10 display grid grid-cols-4  gap-y-5'>
-
-      {
-        medicine.map(product => (
-          <div className="relative rounded-xl border overflow-hidden max-h-max w-5/6 group hover:shadow-2xl text-[#BD1E51]">
+    <div>
+      <div className='p-10 grid grid-cols-4 gap-y-5'>
+        {medicine.length > 0 && medicine.map(product => (
+          <div key={product.medicine_id} className="relative rounded-xl border overflow-hidden max-h-max w-5/6 group hover:shadow-2xl text-[#BD1E51]">
             <figure className="w-[90%] mx-auto mt-2 p-5">
               <img
-                src={product.product_link}
+                src={product.product_image}
                 alt="medicine"
                 className="w-full h-[150px] rounded-sm object-cover"
               />
@@ -98,27 +53,63 @@ function BuyMedicine() {
               <div className="flex justify-between">
                 <h1 className="text-xl font-semibold">{product.name}</h1>
               </div>
-              <div className='mt-4 flex gap-x-2'>
-                {product.use_cases.map((useCase, index) => (
-                  <p key={index} className="font-medium underline">{useCase}</p>
+              <div className='mt-4 flex flex-col gap-x-2'>
+                {product.usage.map((useCase, index) => (
+                  <li key={index} className="text-sm text-gray-400 font-medium underline">{useCase}</li>
                 ))}
               </div>
               <div className='mt-3 flex items-center justify-between'>
-                <h1 className='text-xl font-medium'>₹ {product.price}</h1>
-                <button 
-                className="block bg-[#F1B814] text-white py-2 px-4 rounded-lg text-center text-sm font-semibold transition-transform duration-300 ease-in-out hover:shadow-md hover:transform hover:-translate-y-0.5">Add to Cart</button>
+                <div>
+                  <h1 className='text-xl font-medium'>₹ {product.offer_price} <span className='ml-1 text-xs text-gray-400'>MRP <span className='line-through'>₹ {product.mrp}</span></span> </h1>
+                </div>
+                <div>
+                  <button
+                    onClick={() => addToCartButton(product)}
+                    className="mb-1 block bg-[#F1B814] text-white py-2 px-4 rounded-lg text-center text-sm font-semibold transition-transform duration-300 ease-in-out hover:shadow-md hover:transform hover:-translate-y-0.5"
+                  >
+                    Add to Cart
+                  </button>
+                  <Link
+                    to='details'
+                    state={product}
+                    className='text-sm hover:underline hover:font-medium'
+                  >
+                    {`View Details >>`}
+                  </Link>
+                </div>
               </div>
             </section>
           </div>
-        ))
-
-      }
-
-
-
-
+        ))}
+      </div>
+      <div className='mb-20 w-full max-h-max flex items-center justify-center text-[#BD1E51] font-medium gap-x-2'>
+        <button
+          onClick={() => { getMedicine(1) }}
+          className='h-8 w-8 border border-[#BD1E51] hover:underline '
+        >1</button>
+        <button
+          onClick={() => { getMedicine(2) }}
+          className='h-8 w-8 border border-[#BD1E51] hover:underline '
+        >2</button>
+        <button
+          onClick={() => { getMedicine(3) }}
+          className='h-8 w-8 border border-[#BD1E51] hover:underline '
+        >3</button>
+        <button
+          onClick={() => { getMedicine(4) }}
+          className='h-8 w-8 border border-[#BD1E51] hover:underline '
+        >4</button>
+      </div>
+      <div>
+      </div>
+        {loading &&(
+          <div>
+            <LoadingScreen/>
+          </div>
+         
+          )}
     </div>
-  )
+  );
 }
 
-export default BuyMedicine
+export default BuyMedicine;

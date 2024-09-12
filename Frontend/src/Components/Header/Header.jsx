@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import MedPointLogo from '../../assets/MedPointLogo.svg';
 import Badge from '@mui/material/Badge';
 import CartForBuyMedicine from './CartForBuyMedicine';
+import { Button } from '@mui/material';
+import { useSelector } from 'react-redux';
 
 function Header() {
   const [isMenuButtonOpen, setMenuButtonOpen] = useState(false);
@@ -12,6 +14,9 @@ function Header() {
   const toggleCart = () => setCartOpen(!isCartOpen);
 
   const location = useLocation();
+  const cart = useSelector((state) => state.cart.cart);
+
+
 
   return (
     <div>
@@ -30,7 +35,7 @@ function Header() {
         {/* Navigation Menu */}
         <nav className={`hidden lg:flex w-full items-center justify-center`}>
           <ul className='flex gap-x-6'>
-            <li className='hover:text-[#BD1E51]'><Link to="/home">Home</Link></li>
+            <li className='hover:text-[#BD1E51]'><Link to="">Home</Link></li>
             <li className='hover:text-[#BD1E51]'><Link to="/book-appointment">Book Appointment</Link></li>
             <li className='hover:text-[#BD1E51]'><Link to="/lab-test">Lab Test</Link></li>
             <li className='hover:text-[#BD1E51]'><Link to="/buy-medicine">Buy Medicine</Link></li>
@@ -41,8 +46,8 @@ function Header() {
         {/* Add to Cart Button Appears if the route is /buy-medicine */}
 
         <div className={`${isCartOpen ? 'bg-gray-100 border' : ''} mr-3 relative px-8 pt-2 flex items-center justify-center gap-x-8 w-[34px] h-[34px]  rounded-t-lg`}>
-          {location.pathname === '/buy-medicine' && (
-            <Badge badgeContent={4} color="error">
+          {(location.pathname === '/buy-medicine' || '/buy-medicine/details') && (
+            <Badge badgeContent={cart.length} color="error">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 height="30px"
@@ -57,7 +62,7 @@ function Header() {
             </Badge>
           )}
           {/* Cart item display */}
-          {isCartOpen && (<CartForBuyMedicine/>)}
+          {isCartOpen && (<CartForBuyMedicine />)}
 
         </div>
 
@@ -102,6 +107,25 @@ function Header() {
             </li>
           </ul>
         </div>
+
+        <div className='hidden lg:flex'>
+          <ul className='flex gap-x-10'>
+            <li>
+              <button
+                className='p-3 flex gap-2 border  rounded-lg items-center justify-center'
+              >
+                <div className='w-10 h-10 border border-red-600 overflow-hidden rounded-full'>
+                <img className='w-full h-full'  src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/2048px-Default_pfp.svg.png" alt="User Profile Picture" />
+                </div>
+                <h1>Sumit</h1>
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000000"><path d="M480-360 280-560h400L480-360Z"/></svg>
+              </button>
+            </li>
+          </ul>
+        </div>
+
+
+
       </header>
 
       {/* Mobile Navigation Links */}

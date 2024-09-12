@@ -3,15 +3,17 @@ import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import './index.css'
 import { Route, RouterProvider, createBrowserRouter, createRoutesFromElements } from 'react-router-dom'
+import {Provider} from 'react-redux'
 import Layout from './Layout.jsx'
+import { store } from './app/store.js'
 import {
 
-  
+
   User_Signin,
   User_Signup,
 
   //Doctor Imports
-  
+
   Doctor_Signin,
   Doctor_Signup,
   Doctor_Availability,
@@ -35,9 +37,10 @@ import {
 
 
 
-  
+
   //Buy Medicine
   BuyMedicine,
+  ViewMedicineDetails,
 
 
 
@@ -54,50 +57,54 @@ const router = createBrowserRouter(
   createRoutesFromElements(
 
     <Route>
-    <Route path='/doctor'>
-    <Route path='home' element={<Doctor_Home/>} />
-    <Route path='availability' element={<Doctor_Availability/>} />
-    <Route path='mark-leave' element={<Doctor_Mark_Leave/>} />
-    <Route path='appointments' element={<Doctor_Appointments/>} />
-    <Route path='setting' element={<Doctor_Setting/>} />
-    <Route path='update-profile' element={<Doctor_Update_Profile/>} />
-    </Route>
-    <Route path='/' element={<Layout />}>
-
-      {/* User Route */}
-
-
-      <Route path='user'>
-        <Route path='login' element={<User_Signin/>} />
-        <Route path='register' element={<User_Signup/>} />
+      <Route path='/doctor'>
+        <Route path='home' element={<Doctor_Home />} />
+        <Route path='availability' element={<Doctor_Availability />} />
+        <Route path='mark-leave' element={<Doctor_Mark_Leave />} />
+        <Route path='appointments' element={<Doctor_Appointments />} />
+        <Route path='setting' element={<Doctor_Setting />} />
+        <Route path='update-profile' element={<Doctor_Update_Profile />} />
       </Route>
+      <Route path='/' element={<Layout />}>
+
+        {/* User Route */}
 
 
-      {/* Doctor Route */}
-      <Route path='doctor'>
-        <Route path='login' element={<Doctor_Signin/>} />
-        <Route path='register' element={<Doctor_Signup/>} />
-      </Route>
+        <Route path='user'>
+          <Route path='login' element={<User_Signin />} />
+          <Route path='register' element={<User_Signup />} />
+        </Route>
 
 
-      {/* Home Page */}
-      <Route path='home' element={<Home/>} />
+        {/* Doctor Route */}
+        <Route path='doctor'>
+          <Route path='login' element={<Doctor_Signin />} />
+          <Route path='register' element={<Doctor_Signup />} />
+        </Route>
 
 
-      {/* Appointment Route */}
-      <Route path='book-appointment' element={<Appointment/>} />
+        {/* Home Page */}
+        <Route path='' element={<Home />} />
 
 
-      {/* Lab Test */}
-      <Route path='lab-test' element={<LabTest/>} />
+        {/* Appointment Route */}
+        <Route path='book-appointment' element={<Appointment />} />
 
 
-      {/* Buy Medicine */}
-      <Route path='buy-medicine' element={<BuyMedicine/>} />
+        {/* Lab Test */}
+        <Route path='lab-test' element={<LabTest />} />
 
 
-      {/* Video Consult */}
-      <Route path='video-consult' element={<VideoConsult/>} />
+        {/* Buy Medicine */}
+        <Route path='buy-medicine'>
+          <Route path='' element={<BuyMedicine />} />
+          <Route path='details' element={<ViewMedicineDetails />} />
+        </Route>
+
+
+
+        {/* Video Consult */}
+        <Route path='video-consult' element={<VideoConsult />} />
 
       </Route>
     </Route>
@@ -106,7 +113,7 @@ const router = createBrowserRouter(
 )
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
+  <Provider store={store}>
     <RouterProvider router={router} />
-  </React.StrictMode>,
+  </Provider>
 )
